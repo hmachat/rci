@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Calculette RCI</string>
+    <string name="identifiant">Identifiant</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="s_authentifier">S\'authentifier</string>
+    <string name="logout">Logout</string>
+    <string name="retour">Retour</string>
+    <string name="logo">logo rci finance maroc</string>
+    <string name="choix_loa_credit">Crédit / LOA</string>
+    <string name="choix_leasing">Leasing BOX PRO</string>
+</resources>
