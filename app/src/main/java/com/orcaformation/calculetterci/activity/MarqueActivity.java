@@ -1,6 +1,7 @@
 package com.orcaformation.calculetterci.activity;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +14,8 @@ import com.orcaformation.calculetterci.utils.SessionManager;
 
 public class MarqueActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnLogout;
     private ImageButton btnRenault;
     private ImageButton btnDacia;
-    private Button btnRetour;
     private TextView creditText;
     private SessionManager session;
 
@@ -32,18 +31,18 @@ public class MarqueActivity extends AppCompatActivity implements View.OnClickLis
             logoutUser();
         }
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setAlpha(0.25f);
+        fab.setOnClickListener(this);
+
         String typeCredit = getIntent().getStringExtra("TYPE_CREDIT");
 
 
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnRetour = (Button) findViewById(R.id.btnRetour);
+
         btnRenault = (ImageButton) findViewById(R.id.btnRenault);
         btnDacia = (ImageButton) findViewById(R.id.btnDacia);
         creditText = (TextView) findViewById(R.id.typeCreditText);
 
-
-        btnLogout.setOnClickListener(this);
-        btnRetour.setOnClickListener(this);
         btnRenault.setOnClickListener(this);
         btnDacia.setOnClickListener(this);
         creditText.setText(typeCredit);
@@ -78,12 +77,7 @@ public class MarqueActivity extends AppCompatActivity implements View.OnClickLis
                 intentDacia.putExtra("TYPE_CREDIT",typeCreditDacia);
                 startActivity(intentDacia);
                 break;
-            case R.id.btnRetour:
-                Intent intent = new Intent(MarqueActivity.this, TypeCreditActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.btnLogout:
+            case R.id.fab:
                 logoutUser();
                 break;
             default:

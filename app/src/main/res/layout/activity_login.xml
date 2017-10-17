@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true">
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
+<RelativeLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <!--  Header Starts-->
+
+
+    <!--  Header Starts-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#50000000"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:weightSum="1">
+
         <LinearLayout
             android:id="@+id/header"
             android:orientation="vertical"
@@ -17,10 +25,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="60dip"
-            android:paddingBottom="20dip">
+            android:paddingBottom="20dip"
+            android:weightSum="1">
             <!-- Logo Start-->
             <ImageView android:src="@drawable/logo"
-                android:layout_width="wrap_content"
+                android:layout_width="213dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
                 android:contentDescription="@string/logo" />
@@ -35,11 +44,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dip"
-            android:layout_below="@id/header">
+            android:layout_below="@id/header"
+            android:layout_weight="0.45">
             <!--  Identifiant Label -->
             <TextView android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#372c24"
+                android:textColor="#62666d"
                 android:text="@string/identifiant"/>
             <EditText android:id="@+id/inputLogin"
                 android:layout_width="fill_parent"
@@ -47,26 +57,34 @@
                 android:layout_marginTop="5dip"
                 android:layout_marginBottom="20dip"
                 android:maxLines="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="@color/white"/>
             <!--  Mot de passe Label -->
             <TextView android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="@string/mot_de_passe"/>
+                android:textColor="#62666d"
+                android:text="@string/mot_de_passe"
+                />
             <EditText android:id="@+id/inputPassword"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
                 android:maxLines="1"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:textColor="@color/white"/>
             <!-- Login button -->
             <Button android:id="@+id/btnLogin"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dip"
-                android:text="@string/s_authentifier"/>
+                android:layout_marginTop="67dip"
+                android:text="@string/s_authentifier"
+                android:background="#60000000"
+                android:padding="30dp"
+                android:textColor="@color/white" />
         </LinearLayout>
         <!-- Login Form Ends -->
 
-    </RelativeLayout>
-</ScrollView>
+    </LinearLayout>
+
+</RelativeLayout>
+

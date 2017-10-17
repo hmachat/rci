@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true">
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
+<RelativeLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#50000000"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <!--  Header Starts-->
-        <LinearLayout
-            android:id="@+id/header"
+
+        <LinearLayout android:id="@+id/header"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="60dip"
-            android:paddingBottom="20dip">
+            android:paddingBottom="20dip"
+            android:weightSum="1">
             <!-- Logo Start-->
             <ImageView android:src="@drawable/logo"
-                android:layout_width="wrap_content"
+                android:layout_width="213dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
                 android:contentDescription="@string/logo" />
@@ -28,50 +39,103 @@
         </LinearLayout>
         <!--  Header Ends -->
 
-        <!-- choix type credit -->
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_below="@id/header">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/choix_loa_credit"
-                android:id="@+id/btnLoa" />
+    <LinearLayout android:id="@+id/progressBarLayout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="20dip"
+        android:weightSum="1">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/choix_leasing"
-                android:id="@+id/btnLeasing" />
-        </LinearLayout>
-        <!-- choix type credit -->
-
-        <!-- logout -->
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/logout"
-            android:orientation="vertical"
+        <ProgressBar
+            android:id="@+id/progressBarLoading"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dip"
-            android:layout_below="@id/choice">
-            <Button android:id="@+id/btnLogout"
-                android:layout_width="113dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dip"
-                android:background="@color/btn_logut"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:text="@string/logout"/>
+            android:indeterminate="false"
+            android:max="8"
+            android:padding="4dip">
+        </ProgressBar>
+        <TextView
+            android:id="@+id/progressBarText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/white">
+        </TextView>
         </LinearLayout>
-        <!-- logout -->
 
-    </RelativeLayout>
-</ScrollView>
+        <!-- choix type credit -->
+        <LinearLayout
+            android:id="@+id/choiceCreditLoa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressBarLayout"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
+
+            <Button
+                android:id="@+id/btnLoa"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#60000000"
+                android:padding="30dp"
+                android:text="@string/choix_loa_credit"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+        <!-- choix type credit -->
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/choiceLeasing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_below="@id/choiceCreditLoa">
+
+        <Button
+            android:layout_width="323dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/choix_leasing"
+            android:id="@+id/btnLeasing"
+            android:background="#60000000"
+            android:padding="30dp"
+            android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+
+    <LinearLayout
+            android:id="@+id/floatLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choiceCreditLoa"
+            android:orientation="vertical"
+            android:padding="10dip"
+            android:weightSum="1"
+            android:layout_marginTop="60dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_weight="0.19"
+                android:baselineAlignBottom="true"
+                android:paddingTop="20dp"
+                app:elevation="0dp"
+                app:srcCompat="@android:drawable/ic_lock_power_off" />
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

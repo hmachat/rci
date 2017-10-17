@@ -70,6 +70,7 @@ public class LoginActivity extends Activity {
                 if (!login.isEmpty() && !password.isEmpty()) {
                     // login user
                     checkLogin(login, password);
+                    //checkLogin("reda.brusse@hotmail.fr", "x5s6rgp6");
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
@@ -90,7 +91,7 @@ public class LoginActivity extends Activity {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
-        pDialog.setMessage("Logging in ...");
+        pDialog.setMessage("Connéxion ...");
         DialogManager.showDialog(pDialog);
 
         String URL_LOGIN = AppConfig.URL_LOGIN + "/" + login + "/mdp/" + password;

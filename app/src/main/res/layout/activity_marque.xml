@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true">
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
+<RelativeLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#50000000"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <!--  Header Starts-->
-        <LinearLayout
-            android:id="@+id/header"
+
+        <LinearLayout android:id="@+id/header"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="60dip"
-            android:paddingBottom="20dip">
+            android:paddingBottom="20dip"
+            android:weightSum="1">
             <!-- Logo Start-->
             <ImageView android:src="@drawable/logo"
-                android:layout_width="wrap_content"
+                android:layout_width="213dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
                 android:contentDescription="@string/logo" />
@@ -28,79 +39,98 @@
         </LinearLayout>
         <!--  Header Ends -->
 
-        <!-- choix marque -->
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/choiceCredit"
-            android:layout_width="wrap_content"
+        <LinearLayout android:id="@+id/typeCreditLayout"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_below="@id/header">
+            android:paddingTop="20dip"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/typeCreditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-        <!-- choix marque -->
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-        <!-- choix marque -->
+        </LinearLayout>
+
+        <!-- choix type credit -->
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/choiceMarque"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/typeCreditLayout"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_below="@id/choiceCredit">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:id="@+id/btnRenault"
-                android:src="@drawable/renault"/>
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:id="@+id/btnDacia"
-                android:src="@drawable/dacia"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnRenault"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="#60000000"
+                    android:maxHeight="50dp"
+                    android:maxWidth="50dp"
+                    android:padding="30dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/renault_logo" />
+
+                <ImageButton
+                    android:id="@+id/btnDacia"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="5dp"
+                    android:background="#60000000"
+                    android:maxHeight="50dp"
+                    android:maxWidth="50dp"
+                    android:padding="30dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/dacia_logo"
+                    android:layout_weight="2.03" />
+
+
+            </LinearLayout>
+
         </LinearLayout>
-        <!-- choix marque -->
+        <!-- choix type credit -->
 
-        <!-- logout et retour-->
+
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
+            android:id="@+id/floatLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_below="@id/choiceMarque">
+            android:layout_below="@id/choiceMarque"
+            android:orientation="vertical"
+            android:padding="10dip"
+            android:weightSum="1"
+            android:layout_marginTop="60dp">
 
-            <Button android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/btn_logut"
-                android:textColor="@color/white"
-                android:text="@string/logout"/>
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_weight="0.19"
+                android:baselineAlignBottom="true"
+                android:paddingTop="20dp"
+                app:elevation="0dp"
+                app:srcCompat="@android:drawable/ic_lock_power_off" />
 
-            <Button android:id="@+id/btnRetour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/btn_logut"
-                android:textColor="@color/white"
-                android:text="@string/retour"/>
         </LinearLayout>
-        <!-- logout et retour-->
 
-    </RelativeLayout>
-</ScrollView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

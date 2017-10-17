@@ -1,11 +1,15 @@
 package com.orcaformation.calculetterci.utils;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.orcaformation.calculetterci.entity.Marque;
 import com.orcaformation.calculetterci.entity.Url;
+
+import static com.orcaformation.calculetterci.utils.DialogManager.*;
 
 
 /**
@@ -24,6 +28,15 @@ public class Utils {
     public static String ObjToJson(Object obj){
         Gson gson = new Gson();
         return gson.toJson(obj);
+    }
+
+    public static ProgressDialog createProgressBar(Activity activity, String text){
+        ProgressDialog pDialog = new ProgressDialog(activity);
+        pDialog.setCancelable(false);
+        pDialog.setMessage(text);
+        showDialog(pDialog);
+
+        return pDialog;
     }
 
 

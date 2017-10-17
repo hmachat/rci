@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CalculetteRCI.iml" filepath="$PROJECT_DIR$/CalculetteRCI.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/simulateur_rci_android.iml" filepath="$PROJECT_DIR$/simulateur_rci_android.iml" />
     </modules>
   </component>
 </project>
