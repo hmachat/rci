@@ -2,7 +2,9 @@ package com.orcaformation.calculetterci.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +42,14 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getApplicationContext().getSharedPreferences("url", Context.MODE_PRIVATE).edit().clear().apply();
+        getApplicationContext().getSharedPreferences("marques", Context.MODE_PRIVATE).edit().clear().apply();
+        getApplicationContext().getSharedPreferences("prestations", Context.MODE_PRIVATE).edit().clear().apply();
+        getApplicationContext().getSharedPreferences("packs", Context.MODE_PRIVATE).edit().clear().apply();
+        getApplicationContext().getSharedPreferences("credits", Context.MODE_PRIVATE).edit().clear().apply();
+        getApplicationContext().getSharedPreferences("loas", Context.MODE_PRIVATE).edit().clear().apply();
+        getApplicationContext().getSharedPreferences("leasings", Context.MODE_PRIVATE).edit().clear().apply();
+
         inputLogin = (EditText) findViewById(R.id.inputLogin);
         inputPassword = (EditText) findViewById(R.id.inputPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -47,7 +57,7 @@ public class LoginActivity extends Activity {
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-
+        System.out.println("teest");
         // Session manager
         session = new SessionManager(getApplicationContext());
 
@@ -63,14 +73,15 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+
                 String login = inputLogin.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
                 // Check for empty data in the form
                 if (!login.isEmpty() && !password.isEmpty()) {
                     // login user
-                    checkLogin(login, password);
-                    //checkLogin("reda.brusse@hotmail.fr", "x5s6rgp6");
+                    //checkLogin(login, password);
+                    checkLogin("reda.brusse@hotmail.fr", "x5s6rgp6");
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
@@ -95,8 +106,7 @@ public class LoginActivity extends Activity {
         DialogManager.showDialog(pDialog);
 
         String URL_LOGIN = AppConfig.URL_LOGIN + "/" + login + "/mdp/" + password;
-
-        StringRequest strReq = new StringRequest(Method.POST,
+        StringRequest strReq = new StringRequest(Method.GET,
                 URL_LOGIN, new Response.Listener<String>() {
 
             @Override
@@ -104,6 +114,7 @@ public class LoginActivity extends Activity {
                 try {
                     JSONObject jObj = new JSONObject(response);
                     String error = jObj.getString("error");
+
                     // Check for error node in json
                     if (!error.equals("User inconnu")) {
                         session.setLogin(true,login,password);

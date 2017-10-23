@@ -34,6 +34,7 @@ import com.orcaformation.calculetterci.entity.Pack;
 import com.orcaformation.calculetterci.entity.Prestation;
 import com.orcaformation.calculetterci.entity.Url;
 import com.orcaformation.calculetterci.utils.DialogManager;
+import com.orcaformation.calculetterci.utils.LoadClass;
 import com.orcaformation.calculetterci.utils.LoadClassIntoSharedPref;
 import com.orcaformation.calculetterci.utils.ParseJson;
 import com.orcaformation.calculetterci.utils.SessionManager;
@@ -51,6 +52,7 @@ public class TypeCreditActivity extends Activity implements OnClickListener{
     private SessionManager session;
     private ProgressBar progressBar;
     private TextView progressBarText;
+
     Activity activity;
 
 
@@ -77,52 +79,50 @@ public class TypeCreditActivity extends Activity implements OnClickListener{
         progressBar = (ProgressBar) findViewById(R.id.progressBarLoading);
         progressBarText = (TextView) findViewById(R.id.progressBarText);
 
+
         btnLoa.setOnClickListener(this);
         btnLeasing.setOnClickListener(this);
 
-        startProgress(activity);
+
+        startProgressData(activity);
+
     }
 
-    public void startProgress(final Activity activity) {
+
+    public void startProgressData(final Activity activity) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i <= 8; i++) {
-
                     final Activity act = activity;
                     final int value = i;
-
-                        if(i == 1) {
-                            LoadClassIntoSharedPref.loadUrl(act);
-                            SystemClock.sleep(500);
-                        }
-                        if(i == 2){
-                            LoadClassIntoSharedPref.loadMarques(act);
-                            SystemClock.sleep(500);
-                        }
-                        if(i == 3){
-                            LoadClassIntoSharedPref.loadPrestations(act);
-                            SystemClock.sleep(500);
-                        }
-                        if(i == 4){
-                            LoadClassIntoSharedPref.loadPacks(act);
-                            SystemClock.sleep(500);
-                        }
-                        if(i == 5){
-                            LoadClassIntoSharedPref.loadCredits(act);
-                        }
-                        if(i == 6){
-                            LoadClassIntoSharedPref.loadLoa(act);
-                            SystemClock.sleep(500);
-                        }
-                        if(i == 7){
-                            LoadClassIntoSharedPref.loadLeasing(act);
-                            SystemClock.sleep(500);
-                        }
+                    if(i == 2){
+                        LoadClass.loadMarques(act);
+                        SystemClock.sleep(500);
+                    }
+                    if(i == 3){
+                        LoadClass.loadPrestations(act);
+                        SystemClock.sleep(500);
+                    }
+                    if(i == 4){
+                        LoadClass.loadPacks(act);
+                        SystemClock.sleep(500);
+                    }
+                    if(i == 5){
+                        LoadClass.loadCredits(act);
+                    }
+                    if(i == 6){
+                        LoadClass.loadLoa(act);
+                        SystemClock.sleep(500);
+                    }
+                    if(i == 7){
+                        LoadClass.loadLeasing(act);
+                        SystemClock.sleep(500);
+                    }
                     progressBar.post(new Runnable() {
                         @Override
                         public void run() {
-                           progressBarText.setText("Téléchargement ...");
+                            progressBarText.setText("Téléchargement des données...");
                             progressBar.setProgress(value);
                             if(value == 8){
                                 progressBarText.setVisibility(View.INVISIBLE);
@@ -133,7 +133,13 @@ public class TypeCreditActivity extends Activity implements OnClickListener{
                 }
             }
         };
-        new Thread(runnable).start();
+        Thread thread = new Thread(runnable);
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
