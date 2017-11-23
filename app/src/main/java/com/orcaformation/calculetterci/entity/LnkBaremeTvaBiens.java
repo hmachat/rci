@@ -8,7 +8,7 @@ public class LnkBaremeTvaBiens {
 
     private String XmlBaremeId;
     private String ParamTvaId;
-    private TblParamTva TblParamTva;
+    private com.orcaformation.calculetterci.entity.TblParamTva TblParamTva;
 
     public LnkBaremeTvaBiens() {
     }

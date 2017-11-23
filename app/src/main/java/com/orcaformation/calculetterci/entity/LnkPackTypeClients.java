@@ -8,7 +8,7 @@ public class LnkPackTypeClients {
 
     private String XmlPackId;
     private String XmlTypeClientId;
-    private RefTypeClient RefTypeClient;
+    private com.orcaformation.calculetterci.entity.RefTypeClient RefTypeClient;
 
     public LnkPackTypeClients() {
     }

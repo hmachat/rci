@@ -7,15 +7,12 @@
     <application
         android:name=".app.AppController"
         android:allowBackup="true"
-        android:icon="@mipmap/circle_orange"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/circle_orange"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +21,14 @@
         </activity>
         <activity android:name=".activity.TypeCreditActivity" />
         <activity android:name=".activity.MarqueActivity" />
-        <activity android:name=".activity.ModeleActivity"></activity>
+        <activity android:name=".activity.ModeleActivity" />
+        <activity android:name=".activity.ClientActivity" />
+        <activity android:name=".activity.FinanceCreditActivity" />
+        <activity android:name=".activity.TypeCreditSecondChoice" />
+        <activity android:name=".activity.CalculCreditActivity" />
+        <activity android:name=".activity.FinanceLoaActivity" />
+        <activity android:name=".activity.FinanceLeasingActivity" />
+        <activity android:name=".activity.CalculLoaActivity"></activity>
     </application>
 
 </manifest>

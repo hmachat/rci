@@ -1,7 +1,5 @@
 package com.orcaformation.calculetterci.entity;
 
-import java.util.Arrays;
-
 /**
  * Created by PC_MA22 on 10/10/2017.
  */
@@ -28,7 +26,7 @@ public class TblXmlProduits {
     private String PrestationIsFd;
     private String TypeInformationId;
     private String Description;
-    private RefPrestationBaseCalcul RefPrestationBaseCalcul;
+    private com.orcaformation.calculetterci.entity.RefPrestationBaseCalcul RefPrestationBaseCalcul;
 
     public TblXmlProduits() {
     }

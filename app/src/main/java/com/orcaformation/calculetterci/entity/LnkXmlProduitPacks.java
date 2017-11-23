@@ -8,7 +8,7 @@ public class LnkXmlProduitPacks {
 
     private String XmlPackId;
     private String XmlProduitId;
-    private TblXmlProduit TblXmlProduit;
+    private com.orcaformation.calculetterci.entity.TblXmlProduit TblXmlProduit;
 
     public LnkXmlProduitPacks() {
     }

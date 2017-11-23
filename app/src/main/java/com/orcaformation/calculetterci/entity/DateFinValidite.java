@@ -1,9 +1,5 @@
 package com.orcaformation.calculetterci.entity;
 
-import org.json.JSONObject;
-
-import java.io.Serializable;
-
 /**
  * Created by PC_MA22 on 03/10/2017.
  */

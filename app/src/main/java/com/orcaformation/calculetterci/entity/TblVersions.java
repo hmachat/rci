@@ -1,7 +1,5 @@
 package com.orcaformation.calculetterci.entity;
 
-import java.util.Arrays;
-
 /**
  * Created by PC_MA22 on 03/10/2017.
  */
@@ -16,7 +14,7 @@ public class TblVersions {
     private String MontantTva;
     private String XmlProduitId;
     private String TauxTva;
-    private TblXmlProduit TblXmlProduit;
+    private com.orcaformation.calculetterci.entity.TblXmlProduit TblXmlProduit;
 
     public TblVersions() {
     }

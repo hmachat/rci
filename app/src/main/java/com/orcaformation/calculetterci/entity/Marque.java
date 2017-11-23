@@ -15,7 +15,7 @@ public class Marque {
     private String CreatdAt;
     private String UpdatedAt;
     private String DeletedAt;
-    private RefModeles[] RefModeles;
+    private com.orcaformation.calculetterci.entity.RefModeles[] RefModeles;
 
     public Marque() {
     }

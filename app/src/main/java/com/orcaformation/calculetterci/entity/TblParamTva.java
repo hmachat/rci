@@ -10,7 +10,7 @@ public class TblParamTva {
     private String TypeTvaId;
     private String TypeFinancementId;
     private String ValeurTva;
-    private RefTypeTva RefTypeTva;
+    private com.orcaformation.calculetterci.entity.RefTypeTva RefTypeTva;
 
     public TblParamTva() {
     }

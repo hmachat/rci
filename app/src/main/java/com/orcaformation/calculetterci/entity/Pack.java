@@ -17,9 +17,9 @@ public class Pack {
     private String CreatedAt;
     private String UpdatedAt;
     private String DeletedAt;
-    private RefTypeFinancement RefTypeFinancement;
-    private LnkXmlProduitPacks[] LnkXmlProduitPacks;
-    private LnkPackTypeClients[] LnkPackTypeClients;
+    private com.orcaformation.calculetterci.entity.RefTypeFinancement RefTypeFinancement;
+    private com.orcaformation.calculetterci.entity.LnkXmlProduitPacks[] LnkXmlProduitPacks;
+    private com.orcaformation.calculetterci.entity.LnkPackTypeClients[] LnkPackTypeClients;
 
 
     public Pack() {

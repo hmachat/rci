@@ -20,10 +20,25 @@ public class RefModeles {
     private String CreatedAt;
     private String UpdatedAt;
     private String DeletedAt;
-    private LnkTarificationModeles[] LnkTarificationModeles;
-    private TblVersions[] TblVersions;
+    private com.orcaformation.calculetterci.entity.LnkTarificationModeles[] LnkTarificationModeles;
+    private com.orcaformation.calculetterci.entity.TblVersions[] TblVersions;
 
     public RefModeles() {
+    }
+
+    public RefModeles(String modeleId, String modeleLibelle, String marqueId, String segmentId, String finitionVersion, String motorisationId, String genreVehiculeId, String modelePhoto, String ordreAffichage, String createdAt, String updatedAt, String deletedAt) {
+        ModeleId = modeleId;
+        ModeleLibelle = modeleLibelle;
+        MarqueId = marqueId;
+        SegmentId = segmentId;
+        FinitionVersion = finitionVersion;
+        MotorisationId = motorisationId;
+        GenreVehiculeId = genreVehiculeId;
+        ModelePhoto = modelePhoto;
+        OrdreAffichage = ordreAffichage;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        DeletedAt = deletedAt;
     }
 
     public RefModeles(String modeleId, String modeleLibelle, String marqueId, String segmentId, String finitionVersion, String motorisationId, String genreVehiculeId, String modelePhoto, String ordreAffichage, String createdAt, String updatedAt, String deletedAt, com.orcaformation.calculetterci.entity.LnkTarificationModeles[] lnkTarificationModeles, com.orcaformation.calculetterci.entity.TblVersions[] tblVersions) {

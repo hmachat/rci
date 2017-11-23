@@ -1,9 +1,9 @@
 package com.orcaformation.calculetterci.utils;
 
 import android.content.Context;
-        import android.content.SharedPreferences;
-        import android.content.SharedPreferences.Editor;
-        import android.util.Log;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 public class SessionManager{
     // LogCat tag

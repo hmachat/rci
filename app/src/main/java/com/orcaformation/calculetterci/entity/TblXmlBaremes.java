@@ -28,12 +28,18 @@ public class TblXmlBaremes {
     private String CreatedAt;
     private String UpdatedAt;
     private String DeletedAt;
-    private TblXmlConditions[] TblXmlConditions;
-    private RefPasDuree RefPasDuree;
-    private LnkBaremeTvaBiens[] LnkBaremeTvaBiens;
-    private TblParamTva TblParamTva;
+    private com.orcaformation.calculetterci.entity.TblXmlConditions[] TblXmlConditions;
+    private com.orcaformation.calculetterci.entity.RefPasDuree RefPasDuree;
+    private com.orcaformation.calculetterci.entity.LnkBaremeTvaBiens[] LnkBaremeTvaBiens;
+    private com.orcaformation.calculetterci.entity.TblParamTva TblParamTva;
 
     public TblXmlBaremes() {
+    }
+
+    public TblXmlBaremes(String xmlBaremeId, String pasDureeId, String xmlBaremeTxVr) {
+        XmlBaremeId = xmlBaremeId;
+        PasDureeId = pasDureeId;
+        XmlBaremeTxVr = xmlBaremeTxVr;
     }
 
     public TblXmlBaremes(String xmlBaremeId, String xmlTarificationId, String xmlBaremeCode, String typeBaremeId, String paramTvaBienId, String paramTvaFiId, String xmlBaremeNbEcheanceFd, String xmlBaremeFd, String xmlBaremeFdPlafond, String xmlBaremeDateOuverture, String xmlBaremeDateFermeture, String xmlBaremeTnaDefault, String pasDureeId, String xmlBaremeDelegation, String xmlBaremeTxPremierLoyer, String xmlBaremeTxDg, String xmlBaremeTxVr, String createdAt, String updatedAt, String deletedAt, com.orcaformation.calculetterci.entity.TblXmlConditions[] tblXmlConditions, com.orcaformation.calculetterci.entity.RefPasDuree refPasDuree, com.orcaformation.calculetterci.entity.LnkBaremeTvaBiens[] lnkBaremeTvaBiens, com.orcaformation.calculetterci.entity.TblParamTva tblParamTva) {

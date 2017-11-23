@@ -1,8 +1,6 @@
 package com.orcaformation.calculetterci.utils;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,16 +8,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
 import com.orcaformation.calculetterci.app.AppController;
-import com.orcaformation.calculetterci.content.DBAdapter;
-import com.orcaformation.calculetterci.entity.Credit;
-import com.orcaformation.calculetterci.entity.Leasing;
-import com.orcaformation.calculetterci.entity.Loa;
-import com.orcaformation.calculetterci.entity.Marque;
 import com.orcaformation.calculetterci.entity.Pack;
 import com.orcaformation.calculetterci.entity.Prestation;
-import com.orcaformation.calculetterci.entity.Url;
+import com.orcaformation.calculetterci.entity.XmlTarification;
 
 import java.util.ArrayList;
 
@@ -31,16 +23,12 @@ public class LoadClass {
 
     public static void loadMarques(final Activity activity){
         String tag_string_req = "req_get_marque";
-        final DBAdapter mDbhelper = new DBAdapter(activity).open();
         StringRequest strReq = new StringRequest(Request.Method.GET,
                 "http://rci-bo-pp.orcaformation.com/json/marques.json", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Marque[] marques = ParseJson.parseMarque(response);
-                if(marques.length!=0){
-                    for (int k=0;k<marques.length - 1 ;k++) {
-                         mDbhelper.createMarque(marques[k]);
-                    }
+                Boolean marqueLoaded = ParseJson.parseMarqueIntoDB(response,activity);
+                if(marqueLoaded){
                     Log.d("Status : ", "Marques loaded... ");
                 }else{
                     Toast.makeText(activity.getApplicationContext(),
@@ -121,15 +109,16 @@ public class LoadClass {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public static void loadCredits(final Activity activity){
-        String tag_string_req = "req_get_credit";
-
-
-        StringRequest strReq = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/13814/credit.json", new Response.Listener<String>() {
+    public static void loadTarification(final Activity activity){
+        /* ****************************************************************************************
+                                                     CREDIT
+        ******************************************************************************************/
+        String tag_string_req_credit = "req_get_credit";
+        StringRequest strReqCredit = new StringRequest(Request.Method.GET,
+                "http://rci-bo.orcaformation.com/json/12599/credit.json", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ArrayList<Credit> credits = ParseJson.parseCredit(response);
+                ArrayList<XmlTarification> credits = ParseJson.parseTarificationIntoDB(response, XmlTarification.CREDIT, activity);
                 if(!credits.isEmpty()){
 
                     Log.d("Status : ", "Credits loaded... ");
@@ -137,7 +126,6 @@ public class LoadClass {
                     Toast.makeText(activity.getApplicationContext(),
                             "error parsing credits... ", Toast.LENGTH_LONG).show();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -147,20 +135,17 @@ public class LoadClass {
                         error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        AppController.getInstance().addToRequestQueue(strReqCredit, tag_string_req_credit);
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }
-
-    public static void loadLoa(final Activity activity){
-        String tag_string_req = "req_get_loa";
-
-
-        StringRequest strReq = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/13814/loa.json", new Response.Listener<String>() {
+        /* ****************************************************************************************
+                                                     LOA
+        ******************************************************************************************/
+        String tag_string_req_loa = "req_get_loa";
+        StringRequest strReqLoa = new StringRequest(Request.Method.GET,
+                "http://rci-bo.orcaformation.com/json/12599/loa.json", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ArrayList<Loa> Loas = ParseJson.parseLoa(response);
+                ArrayList<XmlTarification> Loas = ParseJson.parseTarificationIntoDB(response, XmlTarification.LOA, activity);
                 if(!Loas.isEmpty()){
 
                     Log.d("Status : ", "Loas loaded... ");
@@ -168,7 +153,6 @@ public class LoadClass {
                     Toast.makeText(activity.getApplicationContext(),
                             "error parsing loas... ", Toast.LENGTH_LONG).show();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -178,19 +162,17 @@ public class LoadClass {
                         error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        AppController.getInstance().addToRequestQueue(strReqLoa, tag_string_req_loa);
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }
-
-    public static void loadLeasing(final Activity activity){
-        String tag_string_req = "req_get_leasing";
-
-        StringRequest strReq = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/13814/leasing.json", new Response.Listener<String>() {
+        /* ****************************************************************************************
+                                                     LOA
+        ******************************************************************************************/
+        String tag_string_req_leasing = "req_get_leasing";
+        StringRequest strReqLeasing = new StringRequest(Request.Method.GET,
+                "http://rci-bo.orcaformation.com/json/12599/leasing.json", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ArrayList<Leasing> Leasings = ParseJson.parseLeasing(response);
+                ArrayList<XmlTarification> Leasings = ParseJson.parseTarificationIntoDB(response, XmlTarification.LEASING, activity);
                 if(!Leasings.isEmpty()){
 
                     Log.d("Status : ", "Leasings loaded... ");
@@ -198,7 +180,6 @@ public class LoadClass {
                     Toast.makeText(activity.getApplicationContext(),
                             "error parsing leasings... ", Toast.LENGTH_LONG).show();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -208,9 +189,7 @@ public class LoadClass {
                         error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        AppController.getInstance().addToRequestQueue(strReqLeasing, tag_string_req_leasing);
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
-
 }

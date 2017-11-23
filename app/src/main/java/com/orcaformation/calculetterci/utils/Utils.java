@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.orcaformation.calculetterci.entity.Marque;
-import com.orcaformation.calculetterci.entity.Url;
 
-import static com.orcaformation.calculetterci.utils.DialogManager.*;
+import static com.orcaformation.calculetterci.utils.DialogManager.showDialog;
 
 
 /**
@@ -18,11 +16,17 @@ import static com.orcaformation.calculetterci.utils.DialogManager.*;
 
 public class Utils {
 
-    public static void saveInSharedPrefs(Context context, String prefName, String prefValue){
+    public static void saveInSharedPrefs(Context context, String prefName, String prefRow, String prefValue){
         SharedPreferences prefs= context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(prefName, prefValue);
+        editor.putString(prefRow, prefValue);
         editor.apply();
+        editor.apply();
+    }
+
+    public static String getFromSharedPrefs(Context context, String prefName, String prefRow){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        return prefs.getString(prefRow, "");
     }
 
     public static String ObjToJson(Object obj){

@@ -46,6 +46,13 @@ public class TblXmlConditions {
     public TblXmlConditions() {
     }
 
+    public TblXmlConditions(String xmlConditionMontantMin, String xmlConditionMontantMax, String xmlConditionTxPremierLoyerMin, String xmlConditionTxPremierLoyerMax) {
+        XmlConditionMontantMin = xmlConditionMontantMin;
+        XmlConditionMontantMax = xmlConditionMontantMax;
+        XmlConditionTxPremierLoyerMin = xmlConditionTxPremierLoyerMin;
+        XmlConditionTxPremierLoyerMax = xmlConditionTxPremierLoyerMax;
+    }
+
     public TblXmlConditions(String xmlConditionId, String xmlBaremeId, String xmlConditionTypeId, String xmlConditionLibelle, String xmlConditionTna, String xmlConditionDeltaTna, String xmlConditionNbEcheanceFd, String natureBienId, String natureMoteurId, String niveauPrixId, String xmlConditionFd, String xmlConditionFdPlafond, String xmlConditionMoisMin, String xmlConditionMoisMax, String xmlConditionMontant, String xmlConditionMontantMin, String xmlConditionMontantMax, String xmlConditionApport, String xmlConditionApportMinTx, String xmlConditionApportMaxTx, String xmlConditionNiveauPrime, String xmlConditionDelegation, String xmlConditionTxPremierLoyerMin, String xmlConditionTxPremierLoyerMax, String xmlConditionTxDgMin, String xmlConditionTxDgMax, String xmlConditionTxVrMin, String xmlConditionTxVrMax, String xmlConditionDiffere, String xmlConditionDuree, String xmlConditionDureeMin, String xmlConditionDureeMax, String xmlProduitId, String createdAt, String updatedAt, String deletedAt) {
         XmlConditionId = xmlConditionId;
         XmlBaremeId = xmlBaremeId;

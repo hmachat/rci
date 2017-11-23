@@ -1,32 +1,5 @@
 package com.orcaformation.calculetterci.utils;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
-import com.orcaformation.calculetterci.app.AppConfig;
-import com.orcaformation.calculetterci.app.AppController;
-import com.orcaformation.calculetterci.entity.Credit;
-import com.orcaformation.calculetterci.entity.Leasing;
-import com.orcaformation.calculetterci.entity.Loa;
-import com.orcaformation.calculetterci.entity.Marque;
-import com.orcaformation.calculetterci.entity.Pack;
-import com.orcaformation.calculetterci.entity.Prestation;
-import com.orcaformation.calculetterci.entity.Url;
-
-import java.util.ArrayList;
-
-import static com.orcaformation.calculetterci.utils.DialogManager.hideDialog;
-import static com.orcaformation.calculetterci.utils.Utils.createProgressBar;
-
 /**
  * Created by Aicha on 13/10/2017.
  */

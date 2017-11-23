@@ -3,11 +3,16 @@ package com.orcaformation.calculetterci.entity;
 import java.util.Arrays;
 
 /**
- * Created by PC_MA22 on 11/10/2017.
+ * Created by PC_MA22 on 26/10/2017.
  */
 
-public class Loa {
+public class XmlTarification {
 
+    public static final String CREDIT = "1";
+    public static final String LOA = "2";
+    public static final String LEASING = "3";
+
+    private String typeId;
     private String XmlTarificationId;
     private String XmlTarificationLibelle;
     private String TypeBaremeId;
@@ -24,16 +29,22 @@ public class Loa {
     private String NatureBienId;
     private String NatureMoteurId;
     private String MarqueDeltaTna;
-    private LnkProduitTarifications[] LnkProduitTarifications;
-    private RefTypeBareme RefTypeBareme;
+    private com.orcaformation.calculetterci.entity.LnkProduitTarifications[] LnkProduitTarifications;
+    private com.orcaformation.calculetterci.entity.RefTypeBareme RefTypeBareme;
     private TblXmlBaremes[] TblXmlBaremes;
-    private LnkXmlTarificationTypeClients[] LnkXmlTarificationTypeClients;
-    private LnkXmlTarificationReports[] LnkXmlTarificationReports;
+    private com.orcaformation.calculetterci.entity.LnkXmlTarificationTypeClients[] LnkXmlTarificationTypeClients;
+    private com.orcaformation.calculetterci.entity.LnkXmlTarificationReports[] LnkXmlTarificationReports;
 
-    public Loa() {
+    public XmlTarification() {
     }
 
-    public Loa(String xmlTarificationId, String xmlTarificationLibelle, String typeBaremeId, String typeVehiculeId, String typeClientIdASupp, String marcheId, String typeFinancementId, String zoneId, String createdAt, String updatedAt, String deletedAt, String idRefMarque, String modeleId, String natureBienId, String natureMoteurId, String marqueDeltaTna, com.orcaformation.calculetterci.entity.LnkProduitTarifications[] lnkProduitTarifications, com.orcaformation.calculetterci.entity.RefTypeBareme refTypeBareme, com.orcaformation.calculetterci.entity.TblXmlBaremes[] tblXmlBaremes, com.orcaformation.calculetterci.entity.LnkXmlTarificationTypeClients[] lnkXmlTarificationTypeClients, com.orcaformation.calculetterci.entity.LnkXmlTarificationReports[] lnkXmlTarificationReports) {
+    public XmlTarification(String xmlTarificationId, String xmlTarificationLibelle) {
+        XmlTarificationId = xmlTarificationId;
+        XmlTarificationLibelle = xmlTarificationLibelle;
+    }
+
+    public XmlTarification(String typeId, String xmlTarificationId, String xmlTarificationLibelle, String typeBaremeId, String typeVehiculeId, String typeClientIdASupp, String marcheId, String typeFinancementId, String zoneId, String createdAt, String updatedAt, String deletedAt, String idRefMarque, String modeleId, String natureBienId, String natureMoteurId, String marqueDeltaTna, com.orcaformation.calculetterci.entity.LnkProduitTarifications[] lnkProduitTarifications, com.orcaformation.calculetterci.entity.RefTypeBareme refTypeBareme, com.orcaformation.calculetterci.entity.TblXmlBaremes[] tblXmlBaremes, com.orcaformation.calculetterci.entity.LnkXmlTarificationTypeClients[] lnkXmlTarificationTypeClients, com.orcaformation.calculetterci.entity.LnkXmlTarificationReports[] lnkXmlTarificationReports) {
+        this.typeId = typeId;
         XmlTarificationId = xmlTarificationId;
         XmlTarificationLibelle = xmlTarificationLibelle;
         TypeBaremeId = typeBaremeId;
@@ -55,6 +66,14 @@ public class Loa {
         TblXmlBaremes = tblXmlBaremes;
         LnkXmlTarificationTypeClients = lnkXmlTarificationTypeClients;
         LnkXmlTarificationReports = lnkXmlTarificationReports;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public String getXmlTarificationId() {
@@ -227,8 +246,9 @@ public class Loa {
 
     @Override
     public String toString() {
-        return "Loa{" +
-                "XmlTarificationId='" + XmlTarificationId + '\'' +
+        return "XmlTarification{" +
+                "typeId=" + typeId +
+                ", XmlTarificationId='" + XmlTarificationId + '\'' +
                 ", XmlTarificationLibelle='" + XmlTarificationLibelle + '\'' +
                 ", TypeBaremeId='" + TypeBaremeId + '\'' +
                 ", TypeVehiculeId='" + TypeVehiculeId + '\'' +

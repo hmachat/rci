@@ -8,7 +8,7 @@ public class LnkXmlTarificationReports {
 
     private String XmlTarificationId;
     private String ReportId;
-    private RefReport RefReport;
+    private com.orcaformation.calculetterci.entity.RefReport RefReport;
 
     public LnkXmlTarificationReports() {
     }

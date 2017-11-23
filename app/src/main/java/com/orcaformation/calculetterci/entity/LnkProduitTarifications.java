@@ -8,7 +8,7 @@ public class LnkProduitTarifications {
 
     private String XmlProduitId;
     private String XmlTarificationId;
-    private TblXmlProduit TblXmlProduit;
+    private com.orcaformation.calculetterci.entity.TblXmlProduit TblXmlProduit;
 
     public LnkProduitTarifications() {
     }

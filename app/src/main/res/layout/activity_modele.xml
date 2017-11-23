@@ -1,9 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.orcaformation.calculetterci.activity.ModeleActivity">
+    android:layout_height="match_parent" >
 
-</android.support.constraint.ConstraintLayout>
+    <!-- Header aligned to top -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/header" />
+
+    <!-- Footer aligned to bottom -->
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer" />
+
+    <!-- Content below header and above footer -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/header"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="270dp"
+            android:layout_height="285dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="10dip"
+            android:layout_alignParentBottom="true"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/header"
+                android:orientation="vertical"
+                android:padding="10dip"
+                android:weightSum="1"
+                android:layout_weight="13">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/myviewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="118dp"
+                    android:layout_gravity="center"
+                    android:overScrollMode="never"
+                    android:layout_weight="0.90" />
+
+                <EditText
+                    android:id="@+id/editMontant"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_textedit"
+                    android:hint="Montant"
+                    android:inputType="numberDecimal"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textColorHint="#484646" />
+
+
+                <Button
+                    android:id="@+id/btnValiderModele"
+                    android:layout_width="244dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#0b2cba"
+                    android:gravity="center"
+                    android:text="Valider"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFF" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

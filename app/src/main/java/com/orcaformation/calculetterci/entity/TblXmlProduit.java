@@ -4,7 +4,7 @@ package com.orcaformation.calculetterci.entity;
  * Created by PC_MA22 on 03/10/2017.
  */
 
-public class TblXmlProduit {
+public class TblXmlProduit implements java.io.Serializable{
 
     private String XmlProduitId;
     private String XmlPrestationId;
@@ -31,6 +31,21 @@ public class TblXmlProduit {
     private String Description;
 
     public TblXmlProduit() {
+    }
+
+
+
+    public TblXmlProduit(String xmlProduitId, String xmlProduitLibelle, String xmlProduitPrime, String xmlProduitTaux, String prestationBaseCalculId, String prestationObligatoire, String prestationChecked, String prestationDisabled, String prestationVisible, String prestationIsFd) {
+        XmlProduitId = xmlProduitId;
+        XmlProduitLibelle = xmlProduitLibelle;
+        XmlProduitPrime = xmlProduitPrime;
+        XmlProduitTaux = xmlProduitTaux;
+        PrestationBaseCalculId = prestationBaseCalculId;
+        PrestationObligatoire = prestationObligatoire;
+        PrestationChecked = prestationChecked;
+        PrestationDisabled = prestationDisabled;
+        PrestationVisible = prestationVisible;
+        PrestationIsFd = prestationIsFd;
     }
 
     public TblXmlProduit(String xmlProduitId, String xmlPrestationId, String zoneId, String xmlProduitLibelle, String xmlProduitCondition, String xmlProduitCode, String xmlProduitPrime, String xmlProduitTaux, String xmlProduitPlancher, String xmlProduitPlafond, String createdAt, String updatedAt, String deletedAt, String prestationModeFacturationId, String prestationBaseCalculId, String prestationTypeId, String prestationObligatoire, String prestationChecked, String prestationDisabled, String prestationVisible, String prestationIsFd, String typeInformationId, String description) {

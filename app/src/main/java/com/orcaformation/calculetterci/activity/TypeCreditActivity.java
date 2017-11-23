@@ -1,59 +1,26 @@
 package com.orcaformation.calculetterci.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
 import com.orcaformation.calculetterci.R;
-import com.orcaformation.calculetterci.app.AppConfig;
-import com.orcaformation.calculetterci.app.AppController;
-import com.orcaformation.calculetterci.entity.Credit;
-import com.orcaformation.calculetterci.entity.DateFinValidite;
-import com.orcaformation.calculetterci.entity.Leasing;
-import com.orcaformation.calculetterci.entity.Loa;
-import com.orcaformation.calculetterci.entity.Marque;
-import com.orcaformation.calculetterci.entity.Pack;
-import com.orcaformation.calculetterci.entity.Prestation;
-import com.orcaformation.calculetterci.entity.Url;
-import com.orcaformation.calculetterci.utils.DialogManager;
 import com.orcaformation.calculetterci.utils.LoadClass;
-import com.orcaformation.calculetterci.utils.LoadClassIntoSharedPref;
-import com.orcaformation.calculetterci.utils.ParseJson;
 import com.orcaformation.calculetterci.utils.SessionManager;
 import com.orcaformation.calculetterci.utils.Utils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-public class TypeCreditActivity extends Activity implements OnClickListener{
+public class TypeCreditActivity extends Activity implements View.OnClickListener {
 
     private Button btnLoa;
     private Button btnLeasing;
+    private Button fab;
     private SessionManager session;
-    private ProgressBar progressBar;
-    private TextView progressBarText;
 
     Activity activity;
+    Utils utils;
 
 
     @Override
@@ -63,28 +30,25 @@ public class TypeCreditActivity extends Activity implements OnClickListener{
 
         activity = this;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setAlpha(0.25f);
-        fab.setOnClickListener(this);
-
-
         // session manager
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
 
-        btnLoa = (Button) findViewById(R.id.btnLoa);
+        btnLoa = (Button) findViewById(R.id.btnCredit);
         btnLeasing = (Button) findViewById(R.id.btnLeasing);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarLoading);
-        progressBarText = (TextView) findViewById(R.id.progressBarText);
+        fab = (Button) findViewById(R.id.fab);
 
 
         btnLoa.setOnClickListener(this);
         btnLeasing.setOnClickListener(this);
+        fab.setOnClickListener(this);
 
 
-        startProgressData(activity);
+        LoadClass.loadMarques(activity);
+        LoadClass.loadTarification(activity);
+        //startProgressData(activity);
 
     }
 
@@ -95,9 +59,8 @@ public class TypeCreditActivity extends Activity implements OnClickListener{
             public void run() {
                 for (int i = 0; i <= 8; i++) {
                     final Activity act = activity;
-                    final int value = i;
                     if(i == 2){
-                        LoadClass.loadMarques(act);
+
                         SystemClock.sleep(500);
                     }
                     if(i == 3){
@@ -109,27 +72,16 @@ public class TypeCreditActivity extends Activity implements OnClickListener{
                         SystemClock.sleep(500);
                     }
                     if(i == 5){
-                        LoadClass.loadCredits(act);
+                        LoadClass.loadTarification(act);
                     }
                     if(i == 6){
-                        LoadClass.loadLoa(act);
+                        //LoadClass.loadLoa(act);
                         SystemClock.sleep(500);
                     }
                     if(i == 7){
-                        LoadClass.loadLeasing(act);
+                        //LoadClass.loadLeasing(act);
                         SystemClock.sleep(500);
                     }
-                    progressBar.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBarText.setText("Téléchargement des données...");
-                            progressBar.setProgress(value);
-                            if(value == 8){
-                                progressBarText.setVisibility(View.INVISIBLE);
-                                progressBar.setVisibility(View.INVISIBLE) ;
-                            }
-                        }
-                    });
                 }
             }
         };
@@ -157,14 +109,16 @@ public class TypeCreditActivity extends Activity implements OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnLoa:
+            case R.id.btnCredit:
                 Intent intentCredit = new Intent(TypeCreditActivity.this, MarqueActivity.class);
-                intentCredit.putExtra("TYPE_CREDIT","Crédit / LOA");
+                utils.saveInSharedPrefs(getApplicationContext(), "TARIF", "CHOICE", "12");
+                //intentCredit.putExtra("TYPE_CREDIT","Crédit / LOA");
                 startActivity(intentCredit);
                 break;
             case R.id.btnLeasing:
                 Intent intentLeasing = new Intent(TypeCreditActivity.this, MarqueActivity.class);
-                intentLeasing.putExtra("TYPE_CREDIT","Leasing BOX PRO");
+                utils.saveInSharedPrefs(getApplicationContext(), "TARIF", "CHOICE", "3");
+                //intentLeasing.putExtra("TYPE_CREDIT","Leasing BOX PRO");
                 startActivity(intentLeasing);
                 break;
             case R.id.fab:
