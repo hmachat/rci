@@ -2,31 +2,46 @@ package com.orcaformation.calculetterci.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.orcaformation.calculetterci.R;
 import com.orcaformation.calculetterci.utils.LoadClass;
 import com.orcaformation.calculetterci.utils.SessionManager;
 import com.orcaformation.calculetterci.utils.Utils;
 
-public class TypeCreditActivity extends Activity implements View.OnClickListener {
+public class TypeCreditActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnLoa;
     private Button btnLeasing;
-    private Button fab;
     private SessionManager session;
 
     Activity activity;
     Utils utils;
+
+    TextView bonjourMssg;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_credit);
+
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        bonjourMssg = (TextView) findViewById(R.id.bonjourMssg);
+        bonjourMssg.setText("Bonjour "+ utils.getFromSharedPrefs(getApplicationContext(), "RciFinanceLogin", "USER_PRENOM") + " " + utils.getFromSharedPrefs(getApplicationContext(), "RciFinanceLogin", "USER_NOM"));
 
         activity = this;
 
@@ -38,12 +53,10 @@ public class TypeCreditActivity extends Activity implements View.OnClickListener
 
         btnLoa = (Button) findViewById(R.id.btnCredit);
         btnLeasing = (Button) findViewById(R.id.btnLeasing);
-        fab = (Button) findViewById(R.id.fab);
 
 
         btnLoa.setOnClickListener(this);
         btnLeasing.setOnClickListener(this);
-        fab.setOnClickListener(this);
 
 
         LoadClass.loadMarques(activity);
@@ -94,16 +107,7 @@ public class TypeCreditActivity extends Activity implements View.OnClickListener
         }
     }
 
-    /**
-     * Logging out the user. Will set isLoggedIn flag to false in shared
-     * preferences Clears the user data from sqlite users table
-     * */
-    private void logoutUser() {
-        session.setLogin(false,null,null);
-        Intent intent = new Intent(TypeCreditActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 
 
     @Override
@@ -121,14 +125,34 @@ public class TypeCreditActivity extends Activity implements View.OnClickListener
                 //intentLeasing.putExtra("TYPE_CREDIT","Leasing BOX PRO");
                 startActivity(intentLeasing);
                 break;
-            case R.id.fab:
-                logoutUser();
-                break;
             default:
                 break;
         }
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_accueil, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_logout:
+                logoutUser();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logoutUser() {
+        session.setLogin(false,null,null);
+        Intent intent = new Intent(TypeCreditActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 }

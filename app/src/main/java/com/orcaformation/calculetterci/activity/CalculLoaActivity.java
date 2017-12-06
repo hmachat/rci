@@ -1,25 +1,42 @@
 package com.orcaformation.calculetterci.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orcaformation.calculetterci.R;
+import com.orcaformation.calculetterci.app.AppConfig;
 import com.orcaformation.calculetterci.content.DBAdapter;
 import com.orcaformation.calculetterci.entity.TblXmlProduit;
 import com.orcaformation.calculetterci.utils.Calcul;
+import com.orcaformation.calculetterci.utils.LoadPdfFromFIPE;
 import com.orcaformation.calculetterci.utils.Utils;
+import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class CalculLoaActivity extends AppCompatActivity {
 
-    Button btnValiderCalcul;
+    Button btnImprimer;
+    Button btnEnvoyer;
+    TextView textDate;
+    TextView textMarque;
+    TextView textModele;
+    ImageView imageVoiture;
+    TextView textDureeMontant;
     TextView rowBaremeLib;
     TextView rowBaremeVal;
     TextView rowPrixVehiculeLib;
@@ -62,7 +79,21 @@ public class CalculLoaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calcul_loa);
 
-        btnValiderCalcul = (Button) findViewById(R.id.btnValiderCalcul);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        btnImprimer = (Button) findViewById(R.id.btnImprimer);
+        btnEnvoyer = (Button) findViewById(R.id.btnEnvoyer);
+
+        textDate = (TextView) findViewById(R.id.textDate);
+        textMarque = (TextView) findViewById(R.id.textMarque);
+        textModele = (TextView) findViewById(R.id.textModele);
+
+        imageVoiture = (ImageView) findViewById(R.id.imageVoiture);
+
+        textDureeMontant = (TextView) findViewById(R.id.textDureeMontant);
+
 
         rowBaremeLib = (TextView) findViewById(R.id.rowBaremeLib);
         rowBaremeVal = (TextView) findViewById(R.id.rowBaremeVal);
@@ -86,6 +117,15 @@ public class CalculLoaActivity extends AppCompatActivity {
         rowVRVal = (TextView) findViewById(R.id.rowVRVal);
         rowAvanceLib = (TextView) findViewById(R.id.rowAvanceLib);
         rowAvanceVal = (TextView) findViewById(R.id.rowAvanceVal);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String currentDateandTime = sdf.format(new Date());
+        textDate.setText("Etablie le  : " + currentDateandTime);
+
+        textMarque.setText("Marque :     " + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MARQUE_LIB"));
+        textModele.setText("Modèle :     " + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MODELE_LIB"));
+
+        Picasso.with(this).load(AppConfig.URL_RCI + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MODELE_PHOTO")).into(imageVoiture);
 
         rowBaremeLib.setText("Barème : ");
         rowPrixVehiculeLib.setText("Prix du véhicule : ");
@@ -140,7 +180,7 @@ public class CalculLoaActivity extends AppCompatActivity {
         resultCredit = utilCalcul.calculLOA("TTC", Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MONTANT")), 0, Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "LOYER")), Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "LOYER")), 0, Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "TAUX")), tva_achat, Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "TNA")), Integer.parseInt(utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "DUREE")), tva);
         calculNewAssurance(resultCredit, utils.getFromSharedPrefs(getApplicationContext(), "TARIF", "CHOICE"));
 
-
+        textDureeMontant.setText( String.valueOf(resultCredit.get("duree"))+ " mois" + " X " + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MONTANT") + " MAD");
         rowBaremeVal.setText(crBareme.getString(crBareme.getColumnIndex("tarification_libelle")));
         rowPrixVehiculeVal.setText(utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MONTANT"));
         rowApportVal.setText(String.valueOf(apport));
@@ -148,15 +188,6 @@ public class CalculLoaActivity extends AppCompatActivity {
         rowNbrLoyerVal.setText(String.valueOf(resultCredit.get("duree")) + " mois");
         rowLoyerHAVal.setText(String.valueOf(resultCredit.get("mensualite")));
         rowVRVal.setText(String.valueOf(resultCredit.get("montantVR")));
-
-
-        btnValiderCalcul.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO
-            }
-        });
-
 
     }
 
@@ -241,6 +272,27 @@ public class CalculLoaActivity extends AppCompatActivity {
 
         rowLoyerAAVal.setText(String.valueOf(utilCalcul.arrondi2chiffresPoint(Double.parseDouble(resultCredit.get("mensualite")) + somme_assurance,2)));
         rowAvanceVal.setText(String.valueOf(Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "APPORT")) + fd_bar));
+
+        btnImprimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoadPdfFromFIPE.loadFipePDF(CalculLoaActivity.this,2);
+                Intent intent = new Intent(CalculLoaActivity.this, PdfActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnEnvoyer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(utils.getFromSharedPrefs(getApplicationContext(), "CLIENT", "EMAIL_CLIENT").equals("")){
+                    Toast.makeText(getApplicationContext(), "Le champs mail du client doit être rempli", Toast.LENGTH_LONG).show();
+                }else{
+                    LoadPdfFromFIPE.loadFipePDF(CalculLoaActivity.this,1);
+                    Toast.makeText(getApplicationContext(), "Mail envoyé", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
 

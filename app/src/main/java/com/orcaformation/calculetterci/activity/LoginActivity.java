@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,11 +14,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonObject;
 import com.orcaformation.calculetterci.R;
 import com.orcaformation.calculetterci.app.AppConfig;
 import com.orcaformation.calculetterci.app.AppController;
 import com.orcaformation.calculetterci.utils.DialogManager;
 import com.orcaformation.calculetterci.utils.SessionManager;
+import com.orcaformation.calculetterci.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -111,6 +114,12 @@ public class LoginActivity extends Activity {
                     // Check for error node in json
                     if (!error.equals("User inconnu")) {
                         session.setLogin(true,login,password);
+                        JSONObject user = jObj.getJSONObject("user");
+                        JSONObject user0 = user.getJSONObject("0");
+                        Utils.saveInSharedPrefs(getApplicationContext(), "RciFinanceLogin", "USER_ID", user0.getString("UserId"));
+                        Utils.saveInSharedPrefs(getApplicationContext(), "RciFinanceLogin", "USER_NOM", user0.getString("UserNom"));
+                        Utils.saveInSharedPrefs(getApplicationContext(), "RciFinanceLogin", "USER_PRENOM", user0.getString("UserPrenom"));
+                        Log.d("user", user.toString());
                         Intent intent = new Intent(LoginActivity.this, TypeCreditActivity.class);
                         startActivity(intent);
                         finish();

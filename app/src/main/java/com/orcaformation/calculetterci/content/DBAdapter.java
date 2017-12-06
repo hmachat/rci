@@ -645,11 +645,11 @@ public class DBAdapter {
     }
 
     public Cursor fetchPrixTTCByModeleId(String ModeleId) {
-        return mDb.rawQuery("SELECT prix_ttc FROM version WHERE ref_modele_id = '"+ ModeleId + "'", null);
+        return mDb.rawQuery("SELECT _version_id,version_lib,prix_ttc FROM version WHERE ref_modele_id = '"+ ModeleId + "'", null);
     }
 
     public Cursor fetchPrixTTCByVersion_id(String version_id) {
-        return mDb.rawQuery("SELECT prix_ttc FROM version WHERE _version_id = '"+ version_id + "'", null);
+        return mDb.rawQuery("SELECT version_lib,prix_ttc FROM version WHERE _version_id = '"+ version_id + "'", null);
     }
 
     public Cursor fetchChecksByXmlProduitId(String XmlTarificationId) {

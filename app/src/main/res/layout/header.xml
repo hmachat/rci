@@ -13,13 +13,14 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingBottom="15dip"
-        android:paddingTop="30dip"
+        android:paddingTop="10dip"
         android:weightSum="1">
         <!-- Logo Start-->
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="220dp"
-            android:layout_height="74dp"
+            android:layout_width="202dp"
+            android:layout_height="65dp"
+            android:layout_weight="0.35"
             android:scaleType="centerInside"
             android:src="@drawable/logo" />
         <!-- Logo Ends -->

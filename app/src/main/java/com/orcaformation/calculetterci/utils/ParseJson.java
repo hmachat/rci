@@ -221,11 +221,15 @@ public class ParseJson {
                     int i =0;
                     for (JsonElement lnkProduitTarifications : LnkProduitTarificationsList) {
                         JsonObject tblXmlProduit = lnkProduitTarifications.getAsJsonObject().get("TblXmlProduit").getAsJsonObject();
-                        TblXmlProduit tblXmlProduitObj = new TblXmlProduit(tblXmlProduit.getAsJsonObject().get("XmlProduitId").toString(), tblXmlProduit.getAsJsonObject().get("XmlPrestationId").toString(), tblXmlProduit.getAsJsonObject().get("ZoneId").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitLibelle").toString().replace("\"", ""), tblXmlProduit.getAsJsonObject().get("XmlProduitCondition").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCode").toString().replace("\"", ""), tblXmlProduit.getAsJsonObject().get("XmlProduitPrime").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitTaux").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlancher").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlafond").toString(), tblXmlProduit.getAsJsonObject().get("CreatedAt").toString(), tblXmlProduit.getAsJsonObject().get("UpdatedAt").toString(), tblXmlProduit.getAsJsonObject().get("DeletedAt").toString(), tblXmlProduit.getAsJsonObject().get("PrestationModeFacturationId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationBaseCalculId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationTypeId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationObligatoire").toString(), tblXmlProduit.getAsJsonObject().get("PrestationChecked").toString(), tblXmlProduit.getAsJsonObject().get("PrestationDisabled").toString(), tblXmlProduit.getAsJsonObject().get("PrestationVisible").toString(), tblXmlProduit.getAsJsonObject().get("PrestationIsFd").toString(), tblXmlProduit.getAsJsonObject().get("TypeInformationId").toString(), tblXmlProduit.getAsJsonObject().get("Description").toString().replace("\"", ""));
-                        mDbhelper.createTblXmlProduit(tblXmlProduitObj);
-                        LnkProduitTarifications LnkProduitTarificationsObj = new LnkProduitTarifications(lnkProduitTarifications.getAsJsonObject().get("XmlProduitId").toString(), lnkProduitTarifications.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlProduitObj);
-                        myLnkProduitTarifications[i] = LnkProduitTarificationsObj;
-                        mDbhelper.createLnkProduitTarifications(LnkProduitTarificationsObj);
+                        TblXmlProduit tblXmlProduitObj = new TblXmlProduit();
+                        LnkProduitTarifications LnkProduitTarificationsObj = new LnkProduitTarifications();
+                        if(!tblXmlProduit.entrySet().isEmpty()){ //en pp credit.json 18
+                            tblXmlProduitObj = new TblXmlProduit(tblXmlProduit.getAsJsonObject().get("XmlProduitId").toString(), tblXmlProduit.getAsJsonObject().get("XmlPrestationId").toString(), tblXmlProduit.getAsJsonObject().get("ZoneId").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitLibelle").toString().replace("\"", ""), tblXmlProduit.getAsJsonObject().get("XmlProduitCondition").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCode").toString().replace("\"", ""), tblXmlProduit.getAsJsonObject().get("XmlProduitPrime").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitTaux").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlancher").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlafond").toString(), tblXmlProduit.getAsJsonObject().get("CreatedAt").toString(), tblXmlProduit.getAsJsonObject().get("UpdatedAt").toString(), tblXmlProduit.getAsJsonObject().get("DeletedAt").toString(), tblXmlProduit.getAsJsonObject().get("PrestationModeFacturationId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationBaseCalculId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationTypeId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationObligatoire").toString(), tblXmlProduit.getAsJsonObject().get("PrestationChecked").toString(), tblXmlProduit.getAsJsonObject().get("PrestationDisabled").toString(), tblXmlProduit.getAsJsonObject().get("PrestationVisible").toString(), tblXmlProduit.getAsJsonObject().get("PrestationIsFd").toString(), tblXmlProduit.getAsJsonObject().get("TypeInformationId").toString(), tblXmlProduit.getAsJsonObject().get("Description").toString().replace("\"", ""));
+                            mDbhelper.createTblXmlProduit(tblXmlProduitObj);
+                            LnkProduitTarificationsObj = new LnkProduitTarifications(lnkProduitTarifications.getAsJsonObject().get("XmlProduitId").toString(), lnkProduitTarifications.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlProduitObj);
+                            myLnkProduitTarifications[i] = LnkProduitTarificationsObj;
+                            mDbhelper.createLnkProduitTarifications(LnkProduitTarificationsObj);
+                        }
                         i++;
                     }
                     JsonObject refTypeBareme = tarification.getValue().getAsJsonObject().getAsJsonObject("RefTypeBareme");
@@ -255,9 +259,14 @@ public class ParseJson {
                         for(JsonElement lnkBaremeTvaBiens : LnkBaremeTvaBiensList){
                             JsonObject tblParamTva = lnkBaremeTvaBiens.getAsJsonObject().get("TblParamTva").getAsJsonObject();
                             JsonObject refTypeTva = tblParamTva.getAsJsonObject().get("RefTypeTva").getAsJsonObject();
-                            RefTypeTva RefTypeTvaObj = new RefTypeTva(refTypeTva.getAsJsonObject().get("TypeTvaId").toString(), refTypeTva.getAsJsonObject().get("TypeTvaLibelle").toString(), refTypeTva.getAsJsonObject().get("TvaStatique").toString());
-                            TblParamTva TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString(), RefTypeTvaObj);
-                            LnkBaremeTvaBiens LnkBaremeTvaBiensObj = new LnkBaremeTvaBiens(lnkBaremeTvaBiens.getAsJsonObject().get("XmlBaremeId").toString(), lnkBaremeTvaBiens.getAsJsonObject().get("ParamTvaId").toString(), TblParamTvaObj);
+                            RefTypeTva RefTypeTvaObj = new RefTypeTva();
+                            TblParamTva TblParamTvaObj = new TblParamTva();
+                            LnkBaremeTvaBiens LnkBaremeTvaBiensObj = new LnkBaremeTvaBiens();
+                            if(!refTypeTva.entrySet().isEmpty()){
+                                RefTypeTvaObj = new RefTypeTva(refTypeTva.getAsJsonObject().get("TypeTvaId").toString(), refTypeTva.getAsJsonObject().get("TypeTvaLibelle").toString(), refTypeTva.getAsJsonObject().get("TvaStatique").toString());
+                                TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString(), RefTypeTvaObj);
+                                LnkBaremeTvaBiensObj = new LnkBaremeTvaBiens(lnkBaremeTvaBiens.getAsJsonObject().get("XmlBaremeId").toString(), lnkBaremeTvaBiens.getAsJsonObject().get("ParamTvaId").toString(), TblParamTvaObj);
+                            }
                             myLnkBaremeTvaBiens[l] = LnkBaremeTvaBiensObj;
                             l++;
                         }
@@ -291,12 +300,14 @@ public class ParseJson {
                     int n = 0;
                     for(JsonElement lnkXmlTarificationReports : LnkXmlTarificationReportsList){
                         JsonObject refReport = lnkXmlTarificationReports.getAsJsonObject().get("RefReport").getAsJsonObject();
-                        RefReport RefReportObj = new RefReport(refReport.getAsJsonObject().get("ReportId").toString(), refReport.getAsJsonObject().get("ReportLibelle").toString(), refReport.getAsJsonObject().get("ReportValeur").toString());
-                        mDbhelper.createRefReport(RefReportObj);
-
-                        LnkXmlTarificationReports LnkXmlTarificationReportsObj = new LnkXmlTarificationReports(lnkXmlTarificationReports.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationReports.getAsJsonObject().get("ReportId").toString(), RefReportObj);
-                        myLnkXmlTarificationReports[n] = LnkXmlTarificationReportsObj;
-                        mDbhelper.createLnkXmlTarificationReports(LnkXmlTarificationReportsObj);
+                        RefReport RefReportObj = new RefReport();
+                        if(!refReport.entrySet().isEmpty()){
+                            RefReportObj = new RefReport(refReport.getAsJsonObject().get("ReportId").toString(), refReport.getAsJsonObject().get("ReportLibelle").toString(), refReport.getAsJsonObject().get("ReportValeur").toString());
+                            mDbhelper.createRefReport(RefReportObj);
+                            LnkXmlTarificationReports LnkXmlTarificationReportsObj = new LnkXmlTarificationReports(lnkXmlTarificationReports.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationReports.getAsJsonObject().get("ReportId").toString(), RefReportObj);
+                            myLnkXmlTarificationReports[n] = LnkXmlTarificationReportsObj;
+                            mDbhelper.createLnkXmlTarificationReports(LnkXmlTarificationReportsObj);
+                        }
                         n++;
                     }
 
@@ -318,314 +329,4 @@ public class ParseJson {
         return myListTarification;
     }
 
-    /*
-    public static ArrayList<Credit> parseCredit(String response){
-        ArrayList<Credit> myListCredit = new ArrayList<>();
-        try {
-            JSONObject listCredits = new JSONObject(response);
-            // Check for error node in json
-           if (listCredits.length() != 0) {
-                myListCredit = new ArrayList<>();
-               JsonParser jsonParser = new JsonParser();
-               JsonObject gsonlistCredits = (JsonObject)jsonParser.parse(listCredits.toString());
-               for (Map.Entry<String,JsonElement> credit : gsonlistCredits.entrySet()) {
-                   JsonArray LnkProduitTarificationsList = credit.getValue().getAsJsonObject().getAsJsonArray("LnkProduitTarifications");
-                   LnkProduitTarifications[] myLnkProduitTarifications = new LnkProduitTarifications[LnkProduitTarificationsList.size()];
-                   int i =0;
-                   for (JsonElement lnkProduitTarifications : LnkProduitTarificationsList) {
-                       JsonObject tblXmlProduit = lnkProduitTarifications.getAsJsonObject().get("TblXmlProduit").getAsJsonObject();
-                       TblXmlProduit tblXmlProduitObj = new TblXmlProduit(tblXmlProduit.getAsJsonObject().get("XmlProduitId").toString(), tblXmlProduit.getAsJsonObject().get("XmlPrestationId").toString(), tblXmlProduit.getAsJsonObject().get("ZoneId").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitLibelle").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCondition").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCode").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPrime").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitTaux").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlancher").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlafond").toString(), tblXmlProduit.getAsJsonObject().get("CreatedAt").toString(), tblXmlProduit.getAsJsonObject().get("UpdatedAt").toString(), tblXmlProduit.getAsJsonObject().get("DeletedAt").toString(), tblXmlProduit.getAsJsonObject().get("PrestationModeFacturationId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationBaseCalculId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationTypeId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationObligatoire").toString(), tblXmlProduit.getAsJsonObject().get("PrestationChecked").toString(), tblXmlProduit.getAsJsonObject().get("PrestationDisabled").toString(), tblXmlProduit.getAsJsonObject().get("PrestationVisible").toString(), tblXmlProduit.getAsJsonObject().get("PrestationIsFd").toString(), tblXmlProduit.getAsJsonObject().get("TypeInformationId").toString(), tblXmlProduit.getAsJsonObject().get("Description").toString());
-                       LnkProduitTarifications LnkProduitTarificationsObj = new LnkProduitTarifications(lnkProduitTarifications.getAsJsonObject().get("XmlProduitId").toString(), lnkProduitTarifications.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlProduitObj);
-                       myLnkProduitTarifications[i] = LnkProduitTarificationsObj;
-                       i++;
-                   }
-                   JsonObject refTypeBareme = credit.getValue().getAsJsonObject().getAsJsonObject("RefTypeBareme");
-                   RefTypeBareme RefTypeBaremeObj = new RefTypeBareme(refTypeBareme.getAsJsonObject().get("TypeBaremeId").toString(), refTypeBareme.getAsJsonObject().get("TypeBaremeLibelle").toString(), refTypeBareme.getAsJsonObject().get("BaremeIsPromo").toString());
-                   JsonArray TblXmlBaremesList = credit.getValue().getAsJsonObject().getAsJsonArray("TblXmlBaremes");
-                   TblXmlBaremes[] myTblXmlBaremes = new TblXmlBaremes[TblXmlBaremesList.size()];
-                   int j = 0;
-                   for(JsonElement tblXmlBaremesList : TblXmlBaremesList){
-
-                       JsonArray TblXmlConditionsList = tblXmlBaremesList.getAsJsonObject().get("TblXmlConditions").getAsJsonArray();
-                       TblXmlConditions[] myTblXmlConditions = new TblXmlConditions[TblXmlConditionsList.size()];
-                       int k = 0;
-                       for(JsonElement tblXmlConditions : TblXmlConditionsList){
-                           TblXmlConditions TblXmlConditionsObj = new TblXmlConditions(tblXmlConditions.getAsJsonObject().get("XmlConditionId").toString(), tblXmlConditions.getAsJsonObject().get("XmlBaremeId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTypeId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionLibelle").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTna").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDeltaTna").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionNbEcheanceFd").toString(), tblXmlConditions.getAsJsonObject().get("NatureBienId").toString(), tblXmlConditions.getAsJsonObject().get("NatureMoteurId").toString(), tblXmlConditions.getAsJsonObject().get("NiveauPrixId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionFd").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionFdPlafond").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMoisMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMoisMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontant").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontantMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontantMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApport").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApportMinTx").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApportMaxTx").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionNiveauPrime").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDelegation").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxPremierLoyerMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxPremierLoyerMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxDgMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxDgMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxVrMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxVrMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDiffere").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDuree").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDureeMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDureeMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlProduitId").toString(), tblXmlConditions.getAsJsonObject().get("CreatedAt").toString(), tblXmlConditions.getAsJsonObject().get("UpdatedAt").toString(), tblXmlConditions.getAsJsonObject().get("DeletedAt").toString());
-                           myTblXmlConditions[k] = TblXmlConditionsObj;
-                           k++;
-                       }
-
-                       JsonObject refPasDuree = tblXmlBaremesList.getAsJsonObject().get("RefPasDuree").getAsJsonObject();
-                       RefPasDuree RefPasDureeObj = new RefPasDuree(refPasDuree.getAsJsonObject().get("PasDureeId").toString(), refPasDuree.getAsJsonObject().get("PasDureeValeur").toString());
-
-                       JsonArray LnkBaremeTvaBiensList = tblXmlBaremesList.getAsJsonObject().get("LnkBaremeTvaBiens").getAsJsonArray();
-                       LnkBaremeTvaBiens[] myLnkBaremeTvaBiens = new LnkBaremeTvaBiens[LnkBaremeTvaBiensList.size()];
-                       int l = 0;
-                       for(JsonElement lnkBaremeTvaBiens : LnkBaremeTvaBiensList){
-                           JsonObject tblParamTva = lnkBaremeTvaBiens.getAsJsonObject().get("TblParamTva").getAsJsonObject();
-                           JsonObject refTypeTva = tblParamTva.getAsJsonObject().get("RefTypeTva").getAsJsonObject();
-                           RefTypeTva RefTypeTvaObj = new RefTypeTva(refTypeTva.getAsJsonObject().get("TypeTvaId").toString(), refTypeTva.getAsJsonObject().get("TypeTvaLibelle").toString(), refTypeTva.getAsJsonObject().get("TvaStatique").toString());
-                           TblParamTva TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString(), RefTypeTvaObj);
-                           LnkBaremeTvaBiens LnkBaremeTvaBiensObj = new LnkBaremeTvaBiens(lnkBaremeTvaBiens.getAsJsonObject().get("XmlBaremeId").toString(), lnkBaremeTvaBiens.getAsJsonObject().get("ParamTvaId").toString(), TblParamTvaObj);
-                           myLnkBaremeTvaBiens[l] = LnkBaremeTvaBiensObj;
-                           l++;
-                       }
-
-                       JsonObject tblParamTva = tblXmlBaremesList.getAsJsonObject().get("TblParamTva").getAsJsonObject();
-                       TblParamTva TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString());
-
-
-                       TblXmlBaremes TblXmlBaremesObj = new TblXmlBaremes(tblXmlBaremesList.getAsJsonObject().get("XmlBaremeId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeCode").toString(), tblXmlBaremesList.getAsJsonObject().get("TypeBaremeId").toString(), tblXmlBaremesList.getAsJsonObject().get("ParamTvaBienId").toString(), tblXmlBaremesList.getAsJsonObject().get("ParamTvaFiId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeNbEcheanceFd").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeFd").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeFdPlafond").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDateOuverture").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDateFermeture").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTnaDefault").toString(), tblXmlBaremesList.getAsJsonObject().get("PasDureeId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDelegation").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxPremierLoyer").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxDg").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxVr").toString(), tblXmlBaremesList.getAsJsonObject().get("CreatedAt").toString(), tblXmlBaremesList.getAsJsonObject().get("UpdatedAt").toString(), tblXmlBaremesList.getAsJsonObject().get("DeletedAt").toString(), myTblXmlConditions, RefPasDureeObj, myLnkBaremeTvaBiens, TblParamTvaObj);
-                       myTblXmlBaremes[j] = TblXmlBaremesObj;
-                       j++;
-                   }
-
-
-                   JsonArray LnkXmlTarificationTypeClientsList = credit.getValue().getAsJsonObject().getAsJsonArray("LnkXmlTarificationTypeClients");
-                   LnkXmlTarificationTypeClients[] myLnkXmlTarificationTypeClients = new LnkXmlTarificationTypeClients[LnkXmlTarificationTypeClientsList.size()];
-                   int m = 0;
-                   for(JsonElement lnkXmlTarificationTypeClients : LnkXmlTarificationTypeClientsList){
-                       JsonObject refTypeClient = lnkXmlTarificationTypeClients.getAsJsonObject().get("RefTypeClient").getAsJsonObject();
-                       RefTypeClient RefTypeClientObj = new RefTypeClient(refTypeClient.getAsJsonObject().get("TypeClientId").toString(), refTypeClient.getAsJsonObject().get("TypeClientLibelle").toString(), refTypeClient.getAsJsonObject().get("TypeClientLibelleLong").toString(), refTypeClient.getAsJsonObject().get("TypeClientCode").toString());
-
-                       LnkXmlTarificationTypeClients LnkXmlTarificationTypeClientsObj = new LnkXmlTarificationTypeClients(lnkXmlTarificationTypeClients.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationTypeClients.getAsJsonObject().get("TypeClientId").toString(), RefTypeClientObj);
-                       myLnkXmlTarificationTypeClients[m] = LnkXmlTarificationTypeClientsObj;
-                       m++;
-                   }
-
-                   JsonArray LnkXmlTarificationReportsList = credit.getValue().getAsJsonObject().getAsJsonArray("LnkXmlTarificationReports");
-                   LnkXmlTarificationReports[] myLnkXmlTarificationReports = new LnkXmlTarificationReports[LnkXmlTarificationReportsList.size()];
-                   int n = 0;
-                   for(JsonElement lnkXmlTarificationReports : LnkXmlTarificationReportsList){
-                       JsonObject refReport = lnkXmlTarificationReports.getAsJsonObject().get("RefReport").getAsJsonObject();
-                       RefReport RefReportObj = new RefReport(refReport.getAsJsonObject().get("ReportId").toString(), refReport.getAsJsonObject().get("ReportLibelle").toString(), refReport.getAsJsonObject().get("ReportValeur").toString());
-
-                       LnkXmlTarificationReports LnkXmlTarificationReportsObj = new LnkXmlTarificationReports(lnkXmlTarificationReports.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationReports.getAsJsonObject().get("ReportId").toString(), RefReportObj);
-                       myLnkXmlTarificationReports[n] = LnkXmlTarificationReportsObj;
-                       n++;
-                   }
-
-
-                   Credit creditObj = new Credit(credit.getValue().getAsJsonObject().get("XmlTarificationId").toString(), credit.getValue().getAsJsonObject().get("XmlTarificationLibelle").toString(), credit.getValue().getAsJsonObject().get("TypeBaremeId").toString(), credit.getValue().getAsJsonObject().get("TypeVehiculeId").toString(), credit.getValue().getAsJsonObject().get("TypeClientIdASupp").toString(), credit.getValue().getAsJsonObject().get("MarcheId").toString(), credit.getValue().getAsJsonObject().get("TypeFinancementId").toString(), credit.getValue().getAsJsonObject().get("ZoneId").toString(), credit.getValue().getAsJsonObject().get("CreatedAt").toString(), credit.getValue().getAsJsonObject().get("UpdatedAt").toString(), credit.getValue().getAsJsonObject().get("DeletedAt").toString(), credit.getValue().getAsJsonObject().get("IdRefMarque").toString(), credit.getValue().getAsJsonObject().get("ModeleId").toString(), credit.getValue().getAsJsonObject().get("NatureBienId").toString(), credit.getValue().getAsJsonObject().get("NatureMoteurId").toString(), credit.getValue().getAsJsonObject().get("MarqueDeltaTna").toString(), myLnkProduitTarifications, RefTypeBaremeObj, myTblXmlBaremes, myLnkXmlTarificationTypeClients, myLnkXmlTarificationReports);
-                   myListCredit.add(creditObj);
-               }
-
-                return myListCredit;
-
-            } else {
-                return null;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return myListCredit;
-    }
-
-    public static ArrayList<Loa> parseLoa(String response){
-        ArrayList<Loa> myListLoa = new ArrayList<>();
-        try {
-            JSONObject listLoas = new JSONObject(response);
-            // Check for error node in json
-            if (listLoas.length() != 0) {
-                myListLoa = new ArrayList<>();
-                JsonParser jsonParser = new JsonParser();
-                JsonObject gsonlistLoas = (JsonObject)jsonParser.parse(listLoas.toString());
-                for (Map.Entry<String,JsonElement> loa : gsonlistLoas.entrySet()) {
-                    JsonArray LnkProduitTarificationsList = loa.getValue().getAsJsonObject().getAsJsonArray("LnkProduitTarifications");
-                    LnkProduitTarifications[] myLnkProduitTarifications = new LnkProduitTarifications[LnkProduitTarificationsList.size()];
-                    int i =0;
-                    for (JsonElement lnkProduitTarifications : LnkProduitTarificationsList) {
-                        JsonObject tblXmlProduit = lnkProduitTarifications.getAsJsonObject().get("TblXmlProduit").getAsJsonObject();
-                        TblXmlProduit tblXmlProduitObj = new TblXmlProduit(tblXmlProduit.getAsJsonObject().get("XmlProduitId").toString(), tblXmlProduit.getAsJsonObject().get("XmlPrestationId").toString(), tblXmlProduit.getAsJsonObject().get("ZoneId").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitLibelle").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCondition").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCode").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPrime").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitTaux").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlancher").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlafond").toString(), tblXmlProduit.getAsJsonObject().get("CreatedAt").toString(), tblXmlProduit.getAsJsonObject().get("UpdatedAt").toString(), tblXmlProduit.getAsJsonObject().get("DeletedAt").toString(), tblXmlProduit.getAsJsonObject().get("PrestationModeFacturationId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationBaseCalculId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationTypeId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationObligatoire").toString(), tblXmlProduit.getAsJsonObject().get("PrestationChecked").toString(), tblXmlProduit.getAsJsonObject().get("PrestationDisabled").toString(), tblXmlProduit.getAsJsonObject().get("PrestationVisible").toString(), tblXmlProduit.getAsJsonObject().get("PrestationIsFd").toString(), tblXmlProduit.getAsJsonObject().get("TypeInformationId").toString(), tblXmlProduit.getAsJsonObject().get("Description").toString());
-                        LnkProduitTarifications LnkProduitTarificationsObj = new LnkProduitTarifications(lnkProduitTarifications.getAsJsonObject().get("XmlProduitId").toString(), lnkProduitTarifications.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlProduitObj);
-                        myLnkProduitTarifications[i] = LnkProduitTarificationsObj;
-                        i++;
-                    }
-                    JsonObject refTypeBareme = loa.getValue().getAsJsonObject().getAsJsonObject("RefTypeBareme");
-                    RefTypeBareme RefTypeBaremeObj = new RefTypeBareme(refTypeBareme.getAsJsonObject().get("TypeBaremeId").toString(), refTypeBareme.getAsJsonObject().get("TypeBaremeLibelle").toString(), refTypeBareme.getAsJsonObject().get("BaremeIsPromo").toString());
-                    JsonArray TblXmlBaremesList = loa.getValue().getAsJsonObject().getAsJsonArray("TblXmlBaremes");
-                    TblXmlBaremes[] myTblXmlBaremes = new TblXmlBaremes[TblXmlBaremesList.size()];
-                    int j = 0;
-                    for(JsonElement tblXmlBaremesList : TblXmlBaremesList){
-
-                        JsonArray TblXmlConditionsList = tblXmlBaremesList.getAsJsonObject().get("TblXmlConditions").getAsJsonArray();
-                        TblXmlConditions[] myTblXmlConditions = new TblXmlConditions[TblXmlConditionsList.size()];
-                        int k = 0;
-                        for(JsonElement tblXmlConditions : TblXmlConditionsList){
-                            TblXmlConditions TblXmlConditionsObj = new TblXmlConditions(tblXmlConditions.getAsJsonObject().get("XmlConditionId").toString(), tblXmlConditions.getAsJsonObject().get("XmlBaremeId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTypeId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionLibelle").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTna").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDeltaTna").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionNbEcheanceFd").toString(), tblXmlConditions.getAsJsonObject().get("NatureBienId").toString(), tblXmlConditions.getAsJsonObject().get("NatureMoteurId").toString(), tblXmlConditions.getAsJsonObject().get("NiveauPrixId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionFd").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionFdPlafond").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMoisMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMoisMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontant").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontantMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontantMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApport").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApportMinTx").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApportMaxTx").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionNiveauPrime").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDelegation").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxPremierLoyerMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxPremierLoyerMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxDgMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxDgMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxVrMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxVrMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDiffere").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDuree").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDureeMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDureeMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlProduitId").toString(), tblXmlConditions.getAsJsonObject().get("CreatedAt").toString(), tblXmlConditions.getAsJsonObject().get("UpdatedAt").toString(), tblXmlConditions.getAsJsonObject().get("DeletedAt").toString());
-                            myTblXmlConditions[k] = TblXmlConditionsObj;
-                            k++;
-                        }
-
-                        JsonObject refPasDuree = tblXmlBaremesList.getAsJsonObject().get("RefPasDuree").getAsJsonObject();
-                        RefPasDuree RefPasDureeObj = new RefPasDuree(refPasDuree.getAsJsonObject().get("PasDureeId").toString(), refPasDuree.getAsJsonObject().get("PasDureeValeur").toString());
-
-                        JsonArray LnkBaremeTvaBiensList = tblXmlBaremesList.getAsJsonObject().get("LnkBaremeTvaBiens").getAsJsonArray();
-                        LnkBaremeTvaBiens[] myLnkBaremeTvaBiens = new LnkBaremeTvaBiens[LnkBaremeTvaBiensList.size()];
-                        int l = 0;
-                        for(JsonElement lnkBaremeTvaBiens : LnkBaremeTvaBiensList){
-                            JsonObject tblParamTva = lnkBaremeTvaBiens.getAsJsonObject().get("TblParamTva").getAsJsonObject();
-                            JsonObject refTypeTva = tblParamTva.getAsJsonObject().get("RefTypeTva").getAsJsonObject();
-                            RefTypeTva RefTypeTvaObj = new RefTypeTva(refTypeTva.getAsJsonObject().get("TypeTvaId").toString(), refTypeTva.getAsJsonObject().get("TypeTvaLibelle").toString(), refTypeTva.getAsJsonObject().get("TvaStatique").toString());
-                            TblParamTva TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString(), RefTypeTvaObj);
-                            LnkBaremeTvaBiens LnkBaremeTvaBiensObj = new LnkBaremeTvaBiens(lnkBaremeTvaBiens.getAsJsonObject().get("XmlBaremeId").toString(), lnkBaremeTvaBiens.getAsJsonObject().get("ParamTvaId").toString(), TblParamTvaObj);
-                            myLnkBaremeTvaBiens[l] = LnkBaremeTvaBiensObj;
-                            l++;
-                        }
-
-                        JsonObject tblParamTva = tblXmlBaremesList.getAsJsonObject().get("TblParamTva").getAsJsonObject();
-                        TblParamTva TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString());
-
-
-                        TblXmlBaremes TblXmlBaremesObj = new TblXmlBaremes(tblXmlBaremesList.getAsJsonObject().get("XmlBaremeId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeCode").toString(), tblXmlBaremesList.getAsJsonObject().get("TypeBaremeId").toString(), tblXmlBaremesList.getAsJsonObject().get("ParamTvaBienId").toString(), tblXmlBaremesList.getAsJsonObject().get("ParamTvaFiId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeNbEcheanceFd").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeFd").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeFdPlafond").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDateOuverture").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDateFermeture").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTnaDefault").toString(), tblXmlBaremesList.getAsJsonObject().get("PasDureeId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDelegation").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxPremierLoyer").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxDg").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxVr").toString(), tblXmlBaremesList.getAsJsonObject().get("CreatedAt").toString(), tblXmlBaremesList.getAsJsonObject().get("UpdatedAt").toString(), tblXmlBaremesList.getAsJsonObject().get("DeletedAt").toString(), myTblXmlConditions, RefPasDureeObj, myLnkBaremeTvaBiens, TblParamTvaObj);
-                        myTblXmlBaremes[j] = TblXmlBaremesObj;
-                        j++;
-                    }
-
-
-                    JsonArray LnkXmlTarificationTypeClientsList = loa.getValue().getAsJsonObject().getAsJsonArray("LnkXmlTarificationTypeClients");
-                    LnkXmlTarificationTypeClients[] myLnkXmlTarificationTypeClients = new LnkXmlTarificationTypeClients[LnkXmlTarificationTypeClientsList.size()];
-                    int m = 0;
-                    for(JsonElement lnkXmlTarificationTypeClients : LnkXmlTarificationTypeClientsList){
-                        JsonObject refTypeClient = lnkXmlTarificationTypeClients.getAsJsonObject().get("RefTypeClient").getAsJsonObject();
-                        RefTypeClient RefTypeClientObj = new RefTypeClient(refTypeClient.getAsJsonObject().get("TypeClientId").toString(), refTypeClient.getAsJsonObject().get("TypeClientLibelle").toString(), refTypeClient.getAsJsonObject().get("TypeClientLibelleLong").toString(), refTypeClient.getAsJsonObject().get("TypeClientCode").toString());
-
-                        LnkXmlTarificationTypeClients LnkXmlTarificationTypeClientsObj = new LnkXmlTarificationTypeClients(lnkXmlTarificationTypeClients.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationTypeClients.getAsJsonObject().get("TypeClientId").toString(), RefTypeClientObj);
-                        myLnkXmlTarificationTypeClients[m] = LnkXmlTarificationTypeClientsObj;
-                        m++;
-                    }
-
-                    JsonArray LnkXmlTarificationReportsList = loa.getValue().getAsJsonObject().getAsJsonArray("LnkXmlTarificationReports");
-                    LnkXmlTarificationReports[] myLnkXmlTarificationReports = new LnkXmlTarificationReports[LnkXmlTarificationReportsList.size()];
-                    int n = 0;
-                    for(JsonElement lnkXmlTarificationReports : LnkXmlTarificationReportsList){
-                        JsonObject refReport = lnkXmlTarificationReports.getAsJsonObject().get("RefReport").getAsJsonObject();
-                        RefReport RefReportObj = new RefReport(refReport.getAsJsonObject().get("ReportId").toString(), refReport.getAsJsonObject().get("ReportLibelle").toString(), refReport.getAsJsonObject().get("ReportValeur").toString());
-
-                        LnkXmlTarificationReports LnkXmlTarificationReportsObj = new LnkXmlTarificationReports(lnkXmlTarificationReports.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationReports.getAsJsonObject().get("ReportId").toString(), RefReportObj);
-                        myLnkXmlTarificationReports[n] = LnkXmlTarificationReportsObj;
-                        n++;
-                    }
-
-
-                    Loa loaObj = new Loa(loa.getValue().getAsJsonObject().get("XmlTarificationId").toString(), loa.getValue().getAsJsonObject().get("XmlTarificationLibelle").toString(), loa.getValue().getAsJsonObject().get("TypeBaremeId").toString(), loa.getValue().getAsJsonObject().get("TypeVehiculeId").toString(), loa.getValue().getAsJsonObject().get("TypeClientIdASupp").toString(), loa.getValue().getAsJsonObject().get("MarcheId").toString(), loa.getValue().getAsJsonObject().get("TypeFinancementId").toString(), loa.getValue().getAsJsonObject().get("ZoneId").toString(), loa.getValue().getAsJsonObject().get("CreatedAt").toString(), loa.getValue().getAsJsonObject().get("UpdatedAt").toString(), loa.getValue().getAsJsonObject().get("DeletedAt").toString(), loa.getValue().getAsJsonObject().get("IdRefMarque").toString(), loa.getValue().getAsJsonObject().get("ModeleId").toString(), loa.getValue().getAsJsonObject().get("NatureBienId").toString(), loa.getValue().getAsJsonObject().get("NatureMoteurId").toString(), loa.getValue().getAsJsonObject().get("MarqueDeltaTna").toString(), myLnkProduitTarifications, RefTypeBaremeObj, myTblXmlBaremes, myLnkXmlTarificationTypeClients, myLnkXmlTarificationReports);
-                    myListLoa.add(loaObj);
-                }
-
-                return myListLoa;
-
-            } else {
-                return null;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return myListLoa;
-    }
-
-    public static ArrayList<Leasing> parseLeasing(String response){
-        ArrayList<Leasing> myListLeasing = new ArrayList<>();
-        try {
-            JSONObject listLeasings = new JSONObject(response);
-            // Check for error node in json
-            if (listLeasings.length() != 0) {
-                myListLeasing = new ArrayList<>();
-                JsonParser jsonParser = new JsonParser();
-                JsonObject gsonlistLeasings = (JsonObject)jsonParser.parse(listLeasings.toString());
-                for (Map.Entry<String,JsonElement> leasing : gsonlistLeasings.entrySet()) {
-                    JsonArray LnkProduitTarificationsList = leasing.getValue().getAsJsonObject().getAsJsonArray("LnkProduitTarifications");
-                    LnkProduitTarifications[] myLnkProduitTarifications = new LnkProduitTarifications[LnkProduitTarificationsList.size()];
-                    int i =0;
-                    for (JsonElement lnkProduitTarifications : LnkProduitTarificationsList) {
-                        JsonObject tblXmlProduit = lnkProduitTarifications.getAsJsonObject().get("TblXmlProduit").getAsJsonObject();
-                        TblXmlProduit tblXmlProduitObj = new TblXmlProduit(tblXmlProduit.getAsJsonObject().get("XmlProduitId").toString(), tblXmlProduit.getAsJsonObject().get("XmlPrestationId").toString(), tblXmlProduit.getAsJsonObject().get("ZoneId").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitLibelle").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCondition").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitCode").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPrime").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitTaux").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlancher").toString(), tblXmlProduit.getAsJsonObject().get("XmlProduitPlafond").toString(), tblXmlProduit.getAsJsonObject().get("CreatedAt").toString(), tblXmlProduit.getAsJsonObject().get("UpdatedAt").toString(), tblXmlProduit.getAsJsonObject().get("DeletedAt").toString(), tblXmlProduit.getAsJsonObject().get("PrestationModeFacturationId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationBaseCalculId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationTypeId").toString(), tblXmlProduit.getAsJsonObject().get("PrestationObligatoire").toString(), tblXmlProduit.getAsJsonObject().get("PrestationChecked").toString(), tblXmlProduit.getAsJsonObject().get("PrestationDisabled").toString(), tblXmlProduit.getAsJsonObject().get("PrestationVisible").toString(), tblXmlProduit.getAsJsonObject().get("PrestationIsFd").toString(), tblXmlProduit.getAsJsonObject().get("TypeInformationId").toString(), tblXmlProduit.getAsJsonObject().get("Description").toString());
-                        LnkProduitTarifications LnkProduitTarificationsObj = new LnkProduitTarifications(lnkProduitTarifications.getAsJsonObject().get("XmlProduitId").toString(), lnkProduitTarifications.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlProduitObj);
-                        myLnkProduitTarifications[i] = LnkProduitTarificationsObj;
-                        i++;
-                    }
-                    JsonObject refTypeBareme = leasing.getValue().getAsJsonObject().getAsJsonObject("RefTypeBareme");
-                    RefTypeBareme RefTypeBaremeObj = new RefTypeBareme(refTypeBareme.getAsJsonObject().get("TypeBaremeId").toString(), refTypeBareme.getAsJsonObject().get("TypeBaremeLibelle").toString(), refTypeBareme.getAsJsonObject().get("BaremeIsPromo").toString());
-                    JsonArray TblXmlBaremesList = leasing.getValue().getAsJsonObject().getAsJsonArray("TblXmlBaremes");
-                    TblXmlBaremes[] myTblXmlBaremes = new TblXmlBaremes[TblXmlBaremesList.size()];
-                    int j = 0;
-                    for(JsonElement tblXmlBaremesList : TblXmlBaremesList){
-
-                        JsonArray TblXmlConditionsList = tblXmlBaremesList.getAsJsonObject().get("TblXmlConditions").getAsJsonArray();
-                        TblXmlConditions[] myTblXmlConditions = new TblXmlConditions[TblXmlConditionsList.size()];
-                        int k = 0;
-                        for(JsonElement tblXmlConditions : TblXmlConditionsList){
-                            TblXmlConditions TblXmlConditionsObj = new TblXmlConditions(tblXmlConditions.getAsJsonObject().get("XmlConditionId").toString(), tblXmlConditions.getAsJsonObject().get("XmlBaremeId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTypeId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionLibelle").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTna").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDeltaTna").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionNbEcheanceFd").toString(), tblXmlConditions.getAsJsonObject().get("NatureBienId").toString(), tblXmlConditions.getAsJsonObject().get("NatureMoteurId").toString(), tblXmlConditions.getAsJsonObject().get("NiveauPrixId").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionFd").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionFdPlafond").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMoisMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMoisMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontant").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontantMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionMontantMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApport").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApportMinTx").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionApportMaxTx").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionNiveauPrime").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDelegation").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxPremierLoyerMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxPremierLoyerMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxDgMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxDgMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxVrMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionTxVrMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDiffere").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDuree").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDureeMin").toString(), tblXmlConditions.getAsJsonObject().get("XmlConditionDureeMax").toString(), tblXmlConditions.getAsJsonObject().get("XmlProduitId").toString(), tblXmlConditions.getAsJsonObject().get("CreatedAt").toString(), tblXmlConditions.getAsJsonObject().get("UpdatedAt").toString(), tblXmlConditions.getAsJsonObject().get("DeletedAt").toString());
-                            myTblXmlConditions[k] = TblXmlConditionsObj;
-                            k++;
-                        }
-
-                        JsonObject refPasDuree = tblXmlBaremesList.getAsJsonObject().get("RefPasDuree").getAsJsonObject();
-                        RefPasDuree RefPasDureeObj = new RefPasDuree(refPasDuree.getAsJsonObject().get("PasDureeId").toString(), refPasDuree.getAsJsonObject().get("PasDureeValeur").toString());
-
-                        JsonArray LnkBaremeTvaBiensList = tblXmlBaremesList.getAsJsonObject().get("LnkBaremeTvaBiens").getAsJsonArray();
-                        LnkBaremeTvaBiens[] myLnkBaremeTvaBiens = new LnkBaremeTvaBiens[LnkBaremeTvaBiensList.size()];
-                        int l = 0;
-                        for(JsonElement lnkBaremeTvaBiens : LnkBaremeTvaBiensList){
-                            JsonObject tblParamTva = lnkBaremeTvaBiens.getAsJsonObject().get("TblParamTva").getAsJsonObject();
-                            JsonObject refTypeTva = tblParamTva.getAsJsonObject().get("RefTypeTva").getAsJsonObject();
-                            RefTypeTva RefTypeTvaObj = new RefTypeTva(refTypeTva.getAsJsonObject().get("TypeTvaId").toString(), refTypeTva.getAsJsonObject().get("TypeTvaLibelle").toString(), refTypeTva.getAsJsonObject().get("TvaStatique").toString());
-                            TblParamTva TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString(), RefTypeTvaObj);
-                            LnkBaremeTvaBiens LnkBaremeTvaBiensObj = new LnkBaremeTvaBiens(lnkBaremeTvaBiens.getAsJsonObject().get("XmlBaremeId").toString(), lnkBaremeTvaBiens.getAsJsonObject().get("ParamTvaId").toString(), TblParamTvaObj);
-                            myLnkBaremeTvaBiens[l] = LnkBaremeTvaBiensObj;
-                            l++;
-                        }
-
-                        JsonObject tblParamTva = tblXmlBaremesList.getAsJsonObject().get("TblParamTva").getAsJsonObject();
-                        TblParamTva TblParamTvaObj = new TblParamTva(tblParamTva.getAsJsonObject().get("ParamTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeTvaId").toString(), tblParamTva.getAsJsonObject().get("TypeFinancementId").toString(), tblParamTva.getAsJsonObject().get("ValeurTva").toString());
-
-
-                        TblXmlBaremes TblXmlBaremesObj = new TblXmlBaremes(tblXmlBaremesList.getAsJsonObject().get("XmlBaremeId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlTarificationId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeCode").toString(), tblXmlBaremesList.getAsJsonObject().get("TypeBaremeId").toString(), tblXmlBaremesList.getAsJsonObject().get("ParamTvaBienId").toString(), tblXmlBaremesList.getAsJsonObject().get("ParamTvaFiId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeNbEcheanceFd").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeFd").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeFdPlafond").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDateOuverture").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDateFermeture").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTnaDefault").toString(), tblXmlBaremesList.getAsJsonObject().get("PasDureeId").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeDelegation").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxPremierLoyer").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxDg").toString(), tblXmlBaremesList.getAsJsonObject().get("XmlBaremeTxVr").toString(), tblXmlBaremesList.getAsJsonObject().get("CreatedAt").toString(), tblXmlBaremesList.getAsJsonObject().get("UpdatedAt").toString(), tblXmlBaremesList.getAsJsonObject().get("DeletedAt").toString(), myTblXmlConditions, RefPasDureeObj, myLnkBaremeTvaBiens, TblParamTvaObj);
-                        myTblXmlBaremes[j] = TblXmlBaremesObj;
-                        j++;
-                    }
-
-
-                    JsonArray LnkXmlTarificationTypeClientsList = leasing.getValue().getAsJsonObject().getAsJsonArray("LnkXmlTarificationTypeClients");
-                    LnkXmlTarificationTypeClients[] myLnkXmlTarificationTypeClients = new LnkXmlTarificationTypeClients[LnkXmlTarificationTypeClientsList.size()];
-                    int m = 0;
-                    for(JsonElement lnkXmlTarificationTypeClients : LnkXmlTarificationTypeClientsList){
-                        JsonObject refTypeClient = lnkXmlTarificationTypeClients.getAsJsonObject().get("RefTypeClient").getAsJsonObject();
-                        RefTypeClient RefTypeClientObj = new RefTypeClient(refTypeClient.getAsJsonObject().get("TypeClientId").toString(), refTypeClient.getAsJsonObject().get("TypeClientLibelle").toString(), refTypeClient.getAsJsonObject().get("TypeClientLibelleLong").toString(), refTypeClient.getAsJsonObject().get("TypeClientCode").toString());
-
-                        LnkXmlTarificationTypeClients LnkXmlTarificationTypeClientsObj = new LnkXmlTarificationTypeClients(lnkXmlTarificationTypeClients.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationTypeClients.getAsJsonObject().get("TypeClientId").toString(), RefTypeClientObj);
-                        myLnkXmlTarificationTypeClients[m] = LnkXmlTarificationTypeClientsObj;
-                        m++;
-                    }
-
-                    JsonArray LnkXmlTarificationReportsList = leasing.getValue().getAsJsonObject().getAsJsonArray("LnkXmlTarificationReports");
-                    LnkXmlTarificationReports[] myLnkXmlTarificationReports = new LnkXmlTarificationReports[LnkXmlTarificationReportsList.size()];
-                    int n = 0;
-                    for(JsonElement lnkXmlTarificationReports : LnkXmlTarificationReportsList){
-                        JsonObject refReport = lnkXmlTarificationReports.getAsJsonObject().get("RefReport").getAsJsonObject();
-                        RefReport RefReportObj = new RefReport(refReport.getAsJsonObject().get("ReportId").toString(), refReport.getAsJsonObject().get("ReportLibelle").toString(), refReport.getAsJsonObject().get("ReportValeur").toString());
-
-                        LnkXmlTarificationReports LnkXmlTarificationReportsObj = new LnkXmlTarificationReports(lnkXmlTarificationReports.getAsJsonObject().get("XmlTarificationId").toString(), lnkXmlTarificationReports.getAsJsonObject().get("ReportId").toString(), RefReportObj);
-                        myLnkXmlTarificationReports[n] = LnkXmlTarificationReportsObj;
-                        n++;
-                    }
-
-
-                    Leasing leasingObj = new Leasing(leasing.getValue().getAsJsonObject().get("XmlTarificationId").toString(), leasing.getValue().getAsJsonObject().get("XmlTarificationLibelle").toString(), leasing.getValue().getAsJsonObject().get("TypeBaremeId").toString(), leasing.getValue().getAsJsonObject().get("TypeVehiculeId").toString(), leasing.getValue().getAsJsonObject().get("TypeClientIdASupp").toString(), leasing.getValue().getAsJsonObject().get("MarcheId").toString(), leasing.getValue().getAsJsonObject().get("TypeFinancementId").toString(), leasing.getValue().getAsJsonObject().get("ZoneId").toString(), leasing.getValue().getAsJsonObject().get("CreatedAt").toString(), leasing.getValue().getAsJsonObject().get("UpdatedAt").toString(), leasing.getValue().getAsJsonObject().get("DeletedAt").toString(), leasing.getValue().getAsJsonObject().get("IdRefMarque").toString(), leasing.getValue().getAsJsonObject().get("ModeleId").toString(), leasing.getValue().getAsJsonObject().get("NatureBienId").toString(), leasing.getValue().getAsJsonObject().get("NatureMoteurId").toString(), leasing.getValue().getAsJsonObject().get("MarqueDeltaTna").toString(), myLnkProduitTarifications, RefTypeBaremeObj, myTblXmlBaremes, myLnkXmlTarificationTypeClients, myLnkXmlTarificationReports);
-                    myListLeasing.add(leasingObj);
-                }
-
-                return myListLeasing;
-
-            } else {
-                return null;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return myListLeasing;
-    }
-    */
 }

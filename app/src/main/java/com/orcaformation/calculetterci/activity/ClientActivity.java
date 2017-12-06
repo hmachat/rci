@@ -2,14 +2,20 @@ package com.orcaformation.calculetterci.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.orcaformation.calculetterci.R;
 import com.orcaformation.calculetterci.adapter.TypeClientAdapter;
@@ -19,12 +25,13 @@ import com.orcaformation.calculetterci.utils.Utils;
 
 import java.util.ArrayList;
 
-public class ClientActivity extends Activity {
+public class ClientActivity extends AppCompatActivity {
     //TextView info;
 
-    ListView listClientView;
+    Spinner spinnerTypeClient;
     EditText nomClient;
     EditText prenomClient;
+    EditText raisonClient;
     EditText TelClient;
     EditText emailClient;
     EditText adresseClient;
@@ -38,9 +45,14 @@ public class ClientActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
 
-        listClientView = (ListView)findViewById(R.id.listClientView);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        spinnerTypeClient = (Spinner) findViewById(R.id.spinnerTypeClient);
         nomClient = (EditText) findViewById(R.id.nomClient);
         prenomClient = (EditText) findViewById(R.id.prenomClient);
+        raisonClient = (EditText) findViewById(R.id.raisonClient);
         TelClient = (EditText) findViewById(R.id.TelClient);
         emailClient = (EditText) findViewById(R.id.emailClient);
         adresseClient = (EditText) findViewById(R.id.adresseClient);
@@ -48,6 +60,7 @@ public class ClientActivity extends Activity {
 
         RefClientList.clear();
         DBAdapter mDbhelper = new DBAdapter(this).open();
+        final Resources res = getResources();
         Cursor cr = mDbhelper.fetchAllRefTypeClient();
         if(cr.moveToFirst()) {
             for (int i = 0; i < cr.getCount(); i++) {
@@ -59,14 +72,18 @@ public class ClientActivity extends Activity {
             Log.d("cursor : ",String.valueOf(cr.getCount()));
         }
 
-        final TypeClientAdapter myAdapter = new TypeClientAdapter(this, R.layout.client_list_view_row,RefClientList);
+        final TypeClientAdapter myAdapter = new TypeClientAdapter(this, R.layout.client_list_view_row,RefClientList,res);
 
-        listClientView.setAdapter(myAdapter);
-        listClientView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinnerTypeClient.setAdapter(myAdapter);
+        spinnerTypeClient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("type client id ", view.getTag().toString());
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 typeClientId = view.getTag().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -77,6 +94,7 @@ public class ClientActivity extends Activity {
                 utils.saveInSharedPrefs(getApplicationContext(), "CLIENT", "TYPE_CLIENT_ID", typeClientId);
                 utils.saveInSharedPrefs(getApplicationContext(), "CLIENT", "NOM_CLIENT", nomClient.getText().toString());
                 utils.saveInSharedPrefs(getApplicationContext(), "CLIENT", "PRENOM_CLIENT", prenomClient.getText().toString());
+                utils.saveInSharedPrefs(getApplicationContext(), "CLIENT", "RAISON_CLIENT", raisonClient.getText().toString());
                 utils.saveInSharedPrefs(getApplicationContext(), "CLIENT", "TEL_CLIENT",TelClient.getText().toString());
                 utils.saveInSharedPrefs(getApplicationContext(), "CLIENT", "EMAIL_CLIENT", emailClient.getText().toString());
                 utils.saveInSharedPrefs(getApplicationContext(), "CLIENT", "ADRESSE_CLIENT", adresseClient.getText().toString());

@@ -19,6 +19,12 @@ public class TblVersions {
     public TblVersions() {
     }
 
+    public TblVersions(String versionId, String versionLib, String prixTtc) {
+        VersionId = versionId;
+        VersionLib = versionLib;
+        PrixTtc = prixTtc;
+    }
+
     public TblVersions(String versionId, String modeleId, String versionLib, String prixTtc, String prixHt, String montantTva, String xmlProduitId, String tauxTva, com.orcaformation.calculetterci.entity.TblXmlProduit tblXmlProduit) {
         VersionId = versionId;
         ModeleId = modeleId;

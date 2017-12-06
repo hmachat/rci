@@ -286,4 +286,8 @@ public class TblXmlProduit implements java.io.Serializable{
                 ", Description='" + Description + '\'' +
                 '}';
     }
+
+    public boolean isValid() {
+        return XmlProduitId != null;
+    }
 }

@@ -1,25 +1,42 @@
 package com.orcaformation.calculetterci.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orcaformation.calculetterci.R;
+import com.orcaformation.calculetterci.app.AppConfig;
 import com.orcaformation.calculetterci.content.DBAdapter;
 import com.orcaformation.calculetterci.entity.TblXmlProduit;
 import com.orcaformation.calculetterci.utils.Calcul;
+import com.orcaformation.calculetterci.utils.LoadPdfFromFIPE;
 import com.orcaformation.calculetterci.utils.Utils;
+import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class CalculCreditActivity extends AppCompatActivity {
 
-    Button btnValiderCalcul;
+    Button btnImprimer;
+    Button btnEnvoyer;
+    TextView textDate;
+    TextView textMarque;
+    TextView textModele;
+    ImageView imageVoiture;
+    TextView textDureeMontant;
     TextView rowBaremeLib;
     TextView rowBaremeVal;
     TextView rowPrixVehiculeLib;
@@ -63,11 +80,24 @@ public class CalculCreditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calcul_credit);
 
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         /*Log.d("tarification id ", utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "TARIFICATION_ID"));
         Log.d("bareme id ", utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "BAREME_ID"));
         Log.d("bareme id ", utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "LOYER"));*/
 
-        btnValiderCalcul = (Button) findViewById(R.id.btnValiderCalcul);
+        btnImprimer = (Button) findViewById(R.id.btnImprimer);
+        btnEnvoyer = (Button) findViewById(R.id.btnEnvoyer);
+
+        textDate = (TextView) findViewById(R.id.textDate);
+        textMarque = (TextView) findViewById(R.id.textMarque);
+        textModele = (TextView) findViewById(R.id.textModele);
+
+        imageVoiture = (ImageView) findViewById(R.id.imageVoiture);
+
+        textDureeMontant = (TextView) findViewById(R.id.textDureeMontant);
 
         rowBaremeLib = (TextView) findViewById(R.id.rowBaremeLib);
         rowBaremeVal = (TextView) findViewById(R.id.rowBaremeVal);
@@ -91,6 +121,15 @@ public class CalculCreditActivity extends AppCompatActivity {
         rowMensualiteAvecAssurVal = (TextView) findViewById(R.id.rowMensualiteAvecAssurVal);
         rowDerniereEcheanceLib = (TextView) findViewById(R.id.rowDerniereEcheanceLib);
         rowDerniereEcheanceVal = (TextView) findViewById(R.id.rowDerniereEcheanceVal);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String currentDateandTime = sdf.format(new Date());
+        textDate.setText("Etablie le  : " + currentDateandTime);
+
+        textMarque.setText("Marque :     " + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MARQUE_LIB"));
+        textModele.setText("Modèle :     " + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MODELE_LIB"));
+
+        Picasso.with(this).load(AppConfig.URL_RCI + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MODELE_PHOTO")).into(imageVoiture);
 
         rowBaremeLib.setText("Barème : ");
         rowPrixVehiculeLib.setText("Prix du véhicule : ");
@@ -174,19 +213,34 @@ public class CalculCreditActivity extends AppCompatActivity {
 
 
 
-
+        textDureeMontant.setText( String.valueOf(resultCredit.get("duree"))+ " mois" + " X " + utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MONTANT") + " MAD");
         rowBaremeVal.setText(crBareme.getString(crBareme.getColumnIndex("tarification_libelle")));
         rowPrixVehiculeVal.setText(utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MONTANT"));
         rowApportVal.setText(String.valueOf(apport));
         rowMontantVal.setText(String.valueOf(resultCredit.get("montantCredit")));
         rowNombreMensualiteVal.setText(String.valueOf(resultCredit.get("duree"))+ " mois");
         rowMonsualiteHorsAssurVal.setText(String.valueOf(resultCredit.get("mensualite")));
+        utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "MONS_SANS_ASS", String.valueOf(resultCredit.get("mensualite")));
         rowDerniereEcheanceVal.setText(String.valueOf(resultCredit.get("mtVr")));
 
-        btnValiderCalcul.setOnClickListener(new View.OnClickListener() {
+        btnImprimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                  //TODO
+                LoadPdfFromFIPE.loadFipePDF(CalculCreditActivity.this,2);
+                Intent intent = new Intent(CalculCreditActivity.this, PdfActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnEnvoyer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(utils.getFromSharedPrefs(getApplicationContext(), "CLIENT", "EMAIL_CLIENT").equals("")){
+                    Toast.makeText(getApplicationContext(), "Le champs mail du client doit être rempli", Toast.LENGTH_LONG).show();
+                }else{
+                    LoadPdfFromFIPE.loadFipePDF(CalculCreditActivity.this,1);
+                    Toast.makeText(getApplicationContext(), "Mail envoyé", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -202,8 +256,8 @@ public class CalculCreditActivity extends AppCompatActivity {
         ArrayList<TblXmlProduit> tblXmlProduitList = (ArrayList<TblXmlProduit>) getIntent().getSerializableExtra("tblXmlProduitList");
 
         for(int i = 0; i < tblXmlProduitList.size(); i++){
-            Log.d("tblXmlProduitList : ", tblXmlProduitList.get(i).toString());
-            Log.d("base calcul : ", String.valueOf(tblXmlProduitList.get(i).getPrestationBaseCalculId()));
+            //Log.d("tblXmlProduitList : ", tblXmlProduitList.get(i).toString());
+            //Log.d("base calcul : ", String.valueOf(tblXmlProduitList.get(i).getPrestationBaseCalculId()));
 
             //CREADIT
                 if(tblXmlProduitList.get(i).getPrestationBaseCalculId() != null){
@@ -226,9 +280,15 @@ public class CalculCreditActivity extends AppCompatActivity {
                     rowAssOneVal.setVisibility(View.VISIBLE);
                     rowAssOneLib.setText(tblXmlProduitList.get(i).getXmlProduitLibelle());
                     rowAssOneVal.setText(String.valueOf(utilCalcul.arrondi2chiffresPoint(assurance,2)));
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_ONE_NOM", tblXmlProduitList.get(i).getXmlProduitLibelle());
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_ONE_MONTANT", tblXmlProduitList.get(i).getXmlProduitId());
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_ONE_PRODUIT", String.valueOf(utilCalcul.arrondi2chiffresPoint(assurance,2)));
                 }else{
                     rowAssOneLib.setVisibility(View.INVISIBLE);
                     rowAssOneVal.setVisibility(View.INVISIBLE);
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_ONE_NOM", "");
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_ONE_MONTANT", "");
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_ONE_PRODUIT", "");
                 }
             }
             //second check box
@@ -239,9 +299,15 @@ public class CalculCreditActivity extends AppCompatActivity {
                     rowAssTwoVal.setVisibility(View.VISIBLE);
                     rowAssTwoLib.setText(tblXmlProduitList.get(i).getXmlProduitLibelle());
                     rowAssTwoVal.setText(String.valueOf(utilCalcul.arrondi2chiffresPoint(assurance,2)));
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_TWO_NOM", tblXmlProduitList.get(i).getXmlProduitLibelle());
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_TWO_MONTANT", tblXmlProduitList.get(i).getXmlProduitId());
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_TWO_PRODUIT", String.valueOf(utilCalcul.arrondi2chiffresPoint(assurance,2)));
                 }else{
                     rowAssTwoLib.setVisibility(View.INVISIBLE);
                     rowAssTwoVal.setVisibility(View.INVISIBLE);
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_TWO_NOM", "");
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_TWO_MONTANT", "");
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_TWO_PRODUIT", "");
                 }
             }
             //third check box
@@ -252,9 +318,15 @@ public class CalculCreditActivity extends AppCompatActivity {
                     rowAssThreeVal.setVisibility(View.VISIBLE);
                     rowAssThreeLib.setText(tblXmlProduitList.get(i).getXmlProduitLibelle());
                     rowAssThreeVal.setText(String.valueOf(utilCalcul.arrondi2chiffresPoint(assurance,2)));
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_THREE_NOM", tblXmlProduitList.get(i).getXmlProduitLibelle());
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_THREE_MONTANT", tblXmlProduitList.get(i).getXmlProduitId());
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_THREE_PRODUIT", String.valueOf(utilCalcul.arrondi2chiffresPoint(assurance,2)));
                 }else{
                     rowAssThreeLib.setVisibility(View.INVISIBLE);
                     rowAssThreeVal.setVisibility(View.INVISIBLE);
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_THREE_NOM", "");
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_THREE_MONTANT", "");
+                    utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "ASS_THREE_PRODUIT", "");
                 }
             }
             if(tblXmlProduitList.get(i).getPrestationIsFd().equals("false")){
@@ -263,6 +335,7 @@ public class CalculCreditActivity extends AppCompatActivity {
         }
 
          rowMensualiteAvecAssurVal.setText(String.valueOf(utilCalcul.arrondi2chiffresPoint(Double.parseDouble(resultCredit.get("mensualite")) + somme_assurance,2)));
+         utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "MONS_AVEC_ASS", String.valueOf(utilCalcul.arrondi2chiffresPoint(Double.parseDouble(resultCredit.get("mensualite")) + somme_assurance,2)));
 
     }
 

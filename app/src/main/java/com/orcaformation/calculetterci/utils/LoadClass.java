@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.orcaformation.calculetterci.app.AppConfig;
 import com.orcaformation.calculetterci.app.AppController;
 import com.orcaformation.calculetterci.entity.Pack;
 import com.orcaformation.calculetterci.entity.Prestation;
@@ -24,7 +25,7 @@ public class LoadClass {
     public static void loadMarques(final Activity activity){
         String tag_string_req = "req_get_marque";
         StringRequest strReq = new StringRequest(Request.Method.GET,
-                "http://rci-bo-pp.orcaformation.com/json/marques.json", new Response.Listener<String>() {
+                AppConfig.URL_MARQUE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Boolean marqueLoaded = ParseJson.parseMarqueIntoDB(response,activity);
@@ -52,7 +53,7 @@ public class LoadClass {
         String tag_string_req = "req_get_prestation";
 
         StringRequest strReq = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/prestation.json", new Response.Listener<String>() {
+                AppConfig.URL_PRESTATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Prestation[] prestations = ParseJson.parsePrestation(response);
@@ -83,7 +84,7 @@ public class LoadClass {
 
 
         StringRequest strReq = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/pack.json", new Response.Listener<String>() {
+                AppConfig.URL_PACK, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 ArrayList<Pack> packs = ParseJson.parsePack(response);
@@ -115,7 +116,7 @@ public class LoadClass {
         ******************************************************************************************/
         String tag_string_req_credit = "req_get_credit";
         StringRequest strReqCredit = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/12599/credit.json", new Response.Listener<String>() {
+                AppConfig.URL_CREADIT, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 ArrayList<XmlTarification> credits = ParseJson.parseTarificationIntoDB(response, XmlTarification.CREDIT, activity);
@@ -142,7 +143,7 @@ public class LoadClass {
         ******************************************************************************************/
         String tag_string_req_loa = "req_get_loa";
         StringRequest strReqLoa = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/12599/loa.json", new Response.Listener<String>() {
+                AppConfig.URL_LOA, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 ArrayList<XmlTarification> Loas = ParseJson.parseTarificationIntoDB(response, XmlTarification.LOA, activity);
@@ -169,7 +170,7 @@ public class LoadClass {
         ******************************************************************************************/
         String tag_string_req_leasing = "req_get_leasing";
         StringRequest strReqLeasing = new StringRequest(Request.Method.GET,
-                "http://rci-bo.orcaformation.com/json/12599/leasing.json", new Response.Listener<String>() {
+                AppConfig.URL_LEASING, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 ArrayList<XmlTarification> Leasings = ParseJson.parseTarificationIntoDB(response, XmlTarification.LEASING, activity);
@@ -192,4 +193,5 @@ public class LoadClass {
         AppController.getInstance().addToRequestQueue(strReqLeasing, tag_string_req_leasing);
 
     }
+
 }

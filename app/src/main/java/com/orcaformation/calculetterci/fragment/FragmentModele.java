@@ -1,8 +1,10 @@
 package com.orcaformation.calculetterci.fragment;
 
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +14,17 @@ import android.widget.TextView;
 
 import com.orcaformation.calculetterci.R;
 import com.orcaformation.calculetterci.activity.ModeleActivity;
+import com.orcaformation.calculetterci.adapter.VersionAdapter;
+import com.orcaformation.calculetterci.app.AppConfig;
 import com.orcaformation.calculetterci.content.DBAdapter;
 import com.orcaformation.calculetterci.entity.RefModeles;
+import com.orcaformation.calculetterci.entity.TblVersions;
 import com.orcaformation.calculetterci.layout.LinearLayoutModele;
 import com.orcaformation.calculetterci.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Aicha on 17/11/2017.
@@ -27,6 +33,7 @@ import java.util.ArrayList;
 public class FragmentModele extends Fragment {
 
     public static ArrayList<RefModeles> RefModelesList =new ArrayList<>();
+    public Resources res;
 
     public static Fragment newInstance(ModeleActivity context, int pos, float scale) {
         Bundle b = new Bundle();
@@ -54,20 +61,30 @@ public class FragmentModele extends Fragment {
 
         LinearLayout l = (LinearLayout) inflater.inflate(R.layout.modele_list_view_row, container, false);
         int pos = this.getArguments().getInt("pos");
+        Log.d("pos", " : " + pos);
         TextView tv = (TextView) l.findViewById(R.id.libelleModele);
         ImageButton ib = (ImageButton) l.findViewById(R.id.contentModele);
-
         tv.setText(RefModelesList.get(pos).getModeleLibelle());
         String modeleId = RefModelesList.get(pos).getModeleId();
-        Cursor crModeleId = mDbhelper.fetchPrixTTCByModeleId(modeleId);
-        if(crModeleId.moveToFirst()) {
-            for (int i = 0; i < crModeleId.getCount(); i++) {
-                ModeleActivity.montantEdit.setText(crModeleId.getString(crModeleId.getColumnIndex("prix_ttc")));
-                crModeleId.moveToNext();
+        Cursor crVersion = mDbhelper.fetchPrixTTCByModeleId(modeleId);
+        Log.d("modeleId",modeleId);
+        ArrayList<TblVersions>  listVersion = new ArrayList<TblVersions>();
+        if(crVersion.moveToFirst()) {
+            for (int i = 0; i < crVersion.getCount(); i++) {
+                TblVersions versionObj = new TblVersions(crVersion.getString(crVersion.getColumnIndex("_version_id")),crVersion.getString(crVersion.getColumnIndex("version_lib")),crVersion.getString(crVersion.getColumnIndex("prix_ttc")));
+                if(!versionObj.getVersionLib().isEmpty()){
+                    listVersion.add(versionObj);
+                }
+                crVersion.moveToNext();
             }
         }
+        VersionAdapter versionAdapter = new VersionAdapter(getContext(), R.layout.version_list_view_row, listVersion);
+        ModeleActivity.spinnerVersion.setAdapter(versionAdapter);
+
         Utils.saveInSharedPrefs(getContext(), "INFO_VEH", "MODELE_ID",modeleId);
-        Picasso.with(getContext()).load("http://rci-bo-pp.orcaformation.com"+RefModelesList.get(pos).getModelePhoto()).into(ib);
+        Utils.saveInSharedPrefs(getContext(), "INFO_VEH", "MODELE_LIB",RefModelesList.get(pos).getModeleLibelle());
+        Utils.saveInSharedPrefs(getContext(), "INFO_VEH", "MODELE_PHOTO",RefModelesList.get(pos).getModelePhoto());
+        Picasso.with(getContext()).load(AppConfig.URL_RCI + RefModelesList.get(pos).getModelePhoto()).into(ib);
 
         LinearLayoutModele root = (LinearLayoutModele) l.findViewById(R.id.root);
         float scale = this.getArguments().getFloat("scale");

@@ -2,6 +2,9 @@ package com.orcaformation.calculetterci.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,6 +28,10 @@ public class MarqueActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marque);
 
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         btnRenault = (ImageButton) findViewById(R.id.btnRenault);
         btnDacia = (ImageButton) findViewById(R.id.btnDacia);
 
@@ -41,11 +48,13 @@ public class MarqueActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btnRenault:
                 Intent intentRenoult = new Intent(MarqueActivity.this, ModeleActivity.class);
                 utils.saveInSharedPrefs(getApplicationContext(), "INFO_VEH","MARQUE_ID","1");
+                utils.saveInSharedPrefs(getApplicationContext(), "INFO_VEH","MARQUE_LIB","RENAULT");
                 startActivity(intentRenoult);
                 break;
             case R.id.btnDacia:
                 Intent intentDacia = new Intent(MarqueActivity.this, ModeleActivity.class);
                 utils.saveInSharedPrefs(getApplicationContext(),"INFO_VEH", "MARQUE_ID","2");
+                utils.saveInSharedPrefs(getApplicationContext(),"INFO_VEH", "MARQUE_LIB","DACIA");
                 startActivity(intentDacia);
                 break;
             default:

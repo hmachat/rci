@@ -36,7 +36,6 @@ public class CarouselModeleAdapter extends FragmentPagerAdapter implements ViewP
         super(fm);
         this.fm = fm;
         this.context = context;
-
         DBAdapter mDbhelper = new DBAdapter(context).open();
         Cursor cr = mDbhelper.fetchModeleByMarqueId(Utils.getFromSharedPrefs(context, "INFO_VEH", "MARQUE_ID"));
         if(cr.moveToFirst()) {

@@ -1,163 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.orcaformation.calculetterci.activity.FinanceLoaActivity">
-
-    <CheckBox
-        android:id="@+id/assuranceThree"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/btnCalculer"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="13dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/listDureeView"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="9dp"
-        app:layout_constraintLeft_toRightOf="@+id/assuranceTwo"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="13dp"
-        android:visibility="invisible"/>
-
-    <CheckBox
-        android:id="@+id/assuranceTwo"
-        android:layout_width="128dp"
-        android:layout_height="84dp"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/assuranceThree"
-        tools:layout_constraintBaseline_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        android:visibility="invisible"/>
-
-    <EditText
-        android:id="@+id/prixVeh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Prix du véhicule"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/listBaremeView"
-        app:layout_constraintRight_toRightOf="@+id/listBaremeView"
-        android:layout_marginTop="13dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintLeft_toLeftOf="@+id/listBaremeView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/assuranceOne"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/assuranceThree"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/assuranceTwo"
-        app:layout_constraintTop_toTopOf="@+id/assuranceTwo"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:visibility="invisible"
-        android:layout_marginBottom="2dp" />
-
-    <Button
-        android:id="@+id/btnCalculer"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:text="Calculer"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="7dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="58dp"
-        android:layout_marginEnd="58dp"
-        android:layout_marginLeft="58dp"
-        android:layout_marginRight="58dp" />
-
-    <ListView
-        android:id="@+id/listBaremeView"
-        android:layout_width="242dp"
-        android:layout_height="82dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginEnd="54dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="69dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="54dp" />
-
-    <ListView
-        android:id="@+id/listDureeView"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/listTauxView"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="14dp"
-        app:layout_constraintRight_toRightOf="@+id/assuranceThree"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/listLoyerView"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="14dp" />
-
-    <ListView
-        android:id="@+id/listTauxView"
-        android:layout_width="238dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginStart="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintLeft_toLeftOf="@+id/prixVeh"
-        app:layout_constraintRight_toRightOf="@+id/listDureeView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.524"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
-    <ListView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/listLoyerView"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/listTauxView"
-        android:layout_marginStart="43dp"
-        android:layout_marginEnd="43dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="9dp"
-        app:layout_constraintTop_toBottomOf="@+id/listBaremeView"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="43dp"
-        android:layout_marginRight="43dp" />
+    android:layout_height="match_parent" >
 
 
-</android.support.constraint.ConstraintLayout>
+
+    <!-- Header aligned to top -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/header" />
+
+    <!-- Footer aligned to bottom -->
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer" />
+
+    <!-- Content below header and above footer -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/header"
+        android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:text="Prix de véhicule" />
+
+            <EditText
+                android:id="@+id/prixVeh"
+                android:layout_width="90dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="4.91"
+                android:background="@drawable/shape_textedit"
+                android:inputType="numberDecimal"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textColorHint="#484646" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Barème" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/shape_textedit"
+            android:padding="10dp">
+
+            <Spinner
+                android:id="@+id/spinnerBareme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/ThemeOverlay.AppCompat.Light" />
+        </RelativeLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Premier Loyer Majoré TTC (%):"
+                android:textColor="#000000" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/shape_textedit"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/spinnerLoyer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:theme="@style/ThemeOverlay.AppCompat.Light" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="Taux VR" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/shape_textedit"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/spinnerTaux"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:theme="@style/ThemeOverlay.AppCompat.Light" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="Durée (Mois)" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/shape_textedit"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/spinnerDuree"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:theme="@style/ThemeOverlay.AppCompat.Light" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/assuranceOneText"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#000000"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/assuranceOneSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:gravity="right"
+                        android:longClickable="false"
+                        android:textOff="OFF"
+                        android:textOn="ON"
+                        android:theme="@style/BrandedSwitch"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/assuranceTwoText"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#000000"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/assuranceTwoSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:gravity="right"
+                        android:longClickable="false"
+                        android:textOff="OFF"
+                        android:textOn="ON"
+                        android:theme="@style/BrandedSwitch"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/assuranceThreeText"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#000000"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/assuranceThreeSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:gravity="right"
+                        android:longClickable="false"
+                        android:textOff="OFF"
+                        android:textOn="ON"
+                        android:theme="@style/BrandedSwitch"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnCalculer"
+                android:layout_width="221dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="10dp"
+                android:background="#0b2cba"
+                android:gravity="center"
+                android:text="Calculer"
+                android:textAllCaps="false"
+                android:textColor="#FFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
