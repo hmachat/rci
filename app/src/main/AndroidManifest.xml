@@ -25,7 +25,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.orcaformation.calculetterci.activity.TypeCreditActivity" />
         </activity>
-        <activity android:name=".activity.ModeleActivity">
+        <activity android:name=".activity.ModeleVehActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.orcaformation.calculetterci.activity.MarqueActivity" />
@@ -33,7 +33,7 @@
         <activity android:name=".activity.ClientActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.orcaformation.calculetterci.activity.ModeleActivity" />
+                android:value="com.orcaformation.calculetterci.activity.ModeleVehActivity" />
         </activity>
         <activity android:name=".activity.TypeCreditSecondChoice">
             <meta-data
@@ -58,14 +58,10 @@
         <activity android:name=".activity.CalculLoaActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.orcaformation.calculetterci.activity.FinanceLoaActivity"/>
+                android:value="com.orcaformation.calculetterci.activity.FinanceLoaActivity" />
         </activity>
-        <activity android:name=".activity.PdfActivity"></activity>
-
-
-        <activity android:name=".activity.FinanceLeasingActivity"/>
-
-
+        <activity android:name=".activity.PdfActivity" />
+        <activity android:name=".activity.FinanceLeasingActivity" />
     </application>
 
 </manifest>

@@ -167,6 +167,7 @@ public class CalculLoaActivity extends AppCompatActivity {
 
         //Apport
         apport = Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "INFO_VEH", "MONTANT")) * (Double.parseDouble(utils.getFromSharedPrefs(getApplicationContext(), "FINANCE", "LOYER")) / 100);
+        utils.saveInSharedPrefs(getApplicationContext(),"FINANCE", "APPORT", String.valueOf(apport));
 
         double tva_achat = 20;
 
@@ -203,14 +204,19 @@ public class CalculLoaActivity extends AppCompatActivity {
         for(int i = 0; i < tblXmlProduitList.size(); i++){
             Log.d("tblXmlProduitList : ", tblXmlProduitList.get(i).toString());
             Log.d("base calcul : ", String.valueOf(tblXmlProduitList.get(i).getPrestationBaseCalculId()));
+            Log.d("prix total", ""+Double.parseDouble(resultCredit.get("prixTotal")));
+            Log.d("montant loyer 1", ""+Double.parseDouble(resultCredit.get("montantLoyer1")));
 
             //LOA LEASING
                 if(tblXmlProduitList.get(i).getPrestationBaseCalculId() != null){
                     if(tblXmlProduitList.get(i).getPrestationBaseCalculId().equals("1") || tblXmlProduitList.get(i).getPrestationBaseCalculId().equals("2")){ //BL or //VP
                         assurance = calculMensAssurance(Double.parseDouble(tblXmlProduitList.get(i).getXmlProduitTaux()), 0,(Double.parseDouble(resultCredit.get("prixTotal")) - Double.parseDouble(resultCredit.get("montantLoyer1"))) / (1 + (20 / 100))) + Double.parseDouble(tblXmlProduitList.get(i).getXmlProduitPrime());
-                    }else if(tblXmlProduitList.get(i).getPrestationBaseCalculId().equals("3") || tblXmlProduitList.get(i).getPrestationBaseCalculId().equals("4")){ // PTTC - 1L or //PTTC
+                    }else if(tblXmlProduitList.get(i).getPrestationBaseCalculId().equals("3")){ // PTTC - 1L
                         assurance = calculMensAssurance(Double.parseDouble(tblXmlProduitList.get(i).getXmlProduitTaux()), 0, (Double.parseDouble(resultCredit.get("prixTotal")) - Double.parseDouble(resultCredit.get("montantLoyer1")))) + Double.parseDouble(tblXmlProduitList.get(i).getXmlProduitPrime());
-                    }else {
+                    }else if(tblXmlProduitList.get(i).getPrestationBaseCalculId().equals("4")){ //PTTC
+                        assurance = calculMensAssurance(Double.parseDouble(tblXmlProduitList.get(i).getXmlProduitTaux()), 0, (Double.parseDouble(resultCredit.get("prixTotal")))) + Double.parseDouble(tblXmlProduitList.get(i).getXmlProduitPrime());
+                    }
+                    else {
                         assurance = Double.parseDouble(tblXmlProduitList.get(i).getXmlProduitPrime());
                     }
                 }else {
